@@ -1,0 +1,364 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chácara Bofete 3D</title>
+<meta name="description" content="Maquete 3D navegável da Chácara maravilhosa em Bofete/SP">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --chao: #e9eeea;
+    --vidro: rgba(246, 249, 246, 0.86);
+    --tinta: #15241f;
+    --tinta-2: #4b5d56;
+    --linha: rgba(21, 36, 31, 0.12);
+    --sape: #a96a22;
+    --sape-suave: rgba(169, 106, 34, 0.14);
+    --agua: #1f8fa6;
+    --pino: #15241f;
+    --pino-texto: #f4f7f4;
+    --sombra: 0 10px 30px rgba(14, 28, 23, 0.16), 0 1px 3px rgba(14, 28, 23, 0.12);
+    --raio: 14px;
+    --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+    --corpo: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --chao: #0f1714;
+      --vidro: rgba(16, 25, 22, 0.84);
+      --tinta: #e6eee9;
+      --tinta-2: #9db0a8;
+      --linha: rgba(230, 238, 233, 0.13);
+      --sape: #e0a35a;
+      --sape-suave: rgba(224, 163, 90, 0.16);
+      --agua: #5cc6db;
+      --pino: #f1f5f2;
+      --pino-texto: #12201b;
+      --sombra: 0 10px 30px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --chao: #0f1714;
+    --vidro: rgba(16, 25, 22, 0.84);
+    --tinta: #e6eee9;
+    --tinta-2: #9db0a8;
+    --linha: rgba(230, 238, 233, 0.13);
+    --sape: #e0a35a;
+    --sape-suave: rgba(224, 163, 90, 0.16);
+    --agua: #5cc6db;
+    --pino: #f1f5f2;
+    --pino-texto: #12201b;
+    --sombra: 0 10px 30px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+
+  [hidden] { display: none !important; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; overflow: hidden; background: var(--chao); color: var(--tinta);
+    font: 14px/1.45 var(--corpo); -webkit-font-smoothing: antialiased;
+  }
+  #palco { position: fixed; inset: 0; }
+  #palco canvas { display: block; width: 100%; height: 100%; touch-action: none; outline: none; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--sape); outline-offset: 2px; }
+
+  .vidro {
+    background: var(--vidro); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    border: 1px solid var(--linha); border-radius: var(--raio); box-shadow: var(--sombra);
+  }
+
+  /* ---- marca ---- */
+  .marca {
+    position: fixed; top: calc(16px + env(safe-area-inset-top, 0px)); left: 16px;
+    width: min(320px, calc(100vw - 32px)); padding: 16px 18px 14px; z-index: 5;
+  }
+  .marca .geo { font: 500 11px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--tinta-2); }
+  .marca h1 {
+    font: 700 28px/1.02 var(--display); letter-spacing: -0.02em; margin: 8px 0 2px; text-wrap: balance;
+  }
+  .marca .sub { color: var(--sape); font-weight: 600; }
+  .marca .fatos { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 10px 0 0; padding: 10px 0 0; border-top: 1px solid var(--linha); color: var(--tinta-2); font-size: 13px; }
+  .marca .fatos b { color: var(--tinta); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .marca .nota { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 13px; color: var(--tinta-2); }
+  .marca .nota strong { color: var(--tinta); font: 700 15px/1 var(--display); }
+  .marca .nota a { margin-left: auto; color: var(--tinta-2); text-decoration: underline; text-underline-offset: 2px; }
+
+  /* ---- lista de lugares ---- */
+  .lugares {
+    position: fixed; left: 16px; top: calc(222px + env(safe-area-inset-top, 0px)); z-index: 4;
+    width: min(320px, calc(100vw - 32px)); max-height: calc(100% - 330px); overflow: auto; padding: 6px;
+  }
+  .lugares h2 { font: 500 11px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta-2); margin: 8px 10px 6px; }
+  .lugares ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
+  .lugares button {
+    width: 100%; display: flex; align-items: baseline; gap: 10px; padding: 8px 10px; border: 0; border-radius: 9px;
+    background: transparent; cursor: pointer; text-align: left;
+  }
+  .lugares button:hover { background: var(--sape-suave); }
+  .lugares button[aria-current="true"] { background: var(--tinta); color: var(--chao); }
+  .lugares button[aria-current="true"] .tipo { color: inherit; opacity: 0.7; }
+  .lugares .nome { font-weight: 600; }
+  .lugares .tipo { margin-left: auto; font: 400 11px/1 var(--mono); color: var(--tinta-2); }
+  .lugares .sem { color: var(--sape); font: 500 10px/1 var(--mono); }
+
+  /* ---- modos ---- */
+  .modos {
+    position: fixed; left: 50%; transform: translateX(-50%); z-index: 6;
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px)); display: flex; padding: 4px; gap: 2px;
+  }
+  .modos button {
+    border: 0; background: transparent; padding: 9px 16px; border-radius: 10px; cursor: pointer; font-weight: 600; white-space: nowrap;
+  }
+  .modos button:hover { background: var(--sape-suave); }
+  .modos button[aria-pressed="true"] { background: var(--tinta); color: var(--chao); }
+  .modos button:disabled { opacity: 0.35; cursor: not-allowed; background: transparent; }
+  .dica {
+    position: fixed; left: 50%; transform: translateX(-50%); z-index: 5; bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+    font: 400 12px/1.3 var(--mono); color: var(--tinta); background: var(--vidro); padding: 6px 12px; border-radius: 99px;
+    border: 1px solid var(--linha); white-space: nowrap; pointer-events: none; transition: opacity .4s;
+  }
+
+  /* ---- minimapa ---- */
+  .mapa { position: fixed; top: calc(16px + env(safe-area-inset-top, 0px)); right: 16px; z-index: 4; padding: 6px; }
+  .mapa canvas { display: block; width: 216px; height: 162px; border-radius: 9px; cursor: crosshair; }
+  .mapa .leg { display: flex; justify-content: space-between; font: 400 10px/1 var(--mono); color: var(--tinta-2); padding: 6px 2px 0; }
+
+  /* ---- painel ---- */
+  .painel {
+    position: fixed; z-index: 7; right: 16px; top: calc(222px + env(safe-area-inset-top, 0px));
+    bottom: calc(80px + env(safe-area-inset-bottom, 0px)); width: min(380px, calc(100vw - 32px));
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .painel header { padding: 16px 18px 10px; display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; }
+  .painel .tipo { font: 500 11px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--sape); }
+  .painel h2 { grid-column: 1; font: 700 24px/1.05 var(--display); letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+  .painel .fechar { grid-column: 2; grid-row: 1 / span 2; align-self: start; border: 1px solid var(--linha); background: transparent; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 18px; line-height: 1; }
+  .painel .corpo { overflow: auto; padding: 0 18px 18px; display: grid; gap: 14px; align-content: start; }
+  .painel p { margin: 0; color: var(--tinta-2); max-width: 60ch; }
+  .painel .acoes { display: flex; flex-wrap: wrap; gap: 8px; }
+  .btn { border: 1px solid var(--tinta); background: var(--tinta); color: var(--chao); padding: 8px 14px; border-radius: 99px; cursor: pointer; font-weight: 600; }
+  .btn.sec { background: transparent; color: var(--tinta); border-color: var(--linha); }
+  .btn:hover { filter: brightness(1.08); }
+  .fotos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .fotos button { padding: 0; border: 0; border-radius: 8px; overflow: hidden; cursor: zoom-in; aspect-ratio: 1; background: var(--linha); position: relative; }
+  .fotos button:first-child { grid-column: span 3; aspect-ratio: 16 / 10; }
+  .fotos img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s; }
+  .fotos button:hover img { transform: scale(1.04); }
+  .fotos .n.local::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--sape); margin-right: 5px; vertical-align: 1px; }
+  .fotos .n { position: absolute; left: 6px; bottom: 6px; font: 500 10px/1 var(--mono); background: rgba(10, 18, 15, .7); color: #fff; padding: 3px 5px; border-radius: 4px; }
+  .vazio { border: 1px dashed var(--sape); border-radius: 10px; padding: 12px 14px; color: var(--tinta-2); font-size: 13px; }
+  .vazio b { color: var(--sape); }
+  .comodos { display: grid; gap: 6px; }
+  .comodos h3 { margin: 0; font: 500 11px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta-2); }
+  .comodos button { display: flex; justify-content: space-between; gap: 8px; text-align: left; border: 1px solid var(--linha); background: transparent; border-radius: 10px; padding: 9px 12px; cursor: pointer; }
+  .comodos button:hover { border-color: var(--sape); }
+  .comodos small { font: 400 11px/1.4 var(--mono); color: var(--tinta-2); white-space: nowrap; }
+
+  /* ---- pinos ---- */
+  #pinos { position: fixed; inset: 0; pointer-events: none; z-index: 3; }
+  .pino {
+    position: absolute; left: 0; top: 0; pointer-events: auto; cursor: pointer; border: 0; padding: 0; background: none;
+    display: flex; flex-direction: column; align-items: center; will-change: transform; transition: opacity .25s;
+  }
+  .pino span {
+    background: var(--pino); color: var(--pino-texto); font: 600 12px/1 var(--corpo); padding: 6px 10px; border-radius: 99px;
+    white-space: nowrap; box-shadow: 0 4px 14px rgba(0, 0, 0, .25);
+  }
+  .pino i { width: 2px; height: 18px; background: var(--pino); opacity: .8; }
+  .pino b { width: 8px; height: 8px; border-radius: 50%; background: var(--pino); border: 2px solid var(--pino-texto); margin-top: -1px; }
+  .pino.comodo span { background: var(--vidro); color: var(--tinta); border: 1px solid var(--linha); font-weight: 500; font-size: 11px; }
+  .pino.comodo i, .pino.comodo b { display: none; }
+  .pino.ativo span { background: var(--sape); color: #fff; }
+  .pino.ativo i, .pino.ativo b { background: var(--sape); }
+
+  /* ---- joystick ---- */
+  .joy { position: fixed; z-index: 6; left: 24px; bottom: calc(90px + env(safe-area-inset-bottom, 0px)); width: 112px; height: 112px; border-radius: 50%; touch-action: none; }
+  .joy::after { content: ""; position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: var(--tinta); opacity: .75; transform: translate(var(--jx, 0px), var(--jy, 0px)); }
+
+  /* ---- lightbox ---- */
+  .caixa { position: fixed; inset: 0; z-index: 20; background: rgba(8, 14, 12, .92); display: grid; grid-template-rows: 1fr auto; padding: 16px; padding-block: calc(16px + env(safe-area-inset-top, 0px)) calc(16px + env(safe-area-inset-bottom, 0px)); }
+  .caixa img { width: 100%; height: 100%; object-fit: contain; min-height: 0; }
+  .caixa .barra { display: flex; align-items: center; justify-content: center; gap: 14px; color: #e8efeb; font: 400 12px/1 var(--mono); padding-top: 12px; }
+  .caixa button { background: rgba(255, 255, 255, .1); color: #fff; border: 1px solid rgba(255, 255, 255, .2); border-radius: 99px; padding: 8px 14px; cursor: pointer; }
+
+  /* ---- abertura ---- */
+  .abertura { position: fixed; inset: 0; z-index: 30; background: var(--chao); display: grid; place-items: center; transition: opacity .6s; }
+  .abertura div { text-align: center; }
+  .abertura strong { display: block; font: 700 30px/1 var(--display); letter-spacing: -0.02em; }
+  .abertura span { font: 400 12px/1 var(--mono); color: var(--tinta-2); }
+  .aviso { position: fixed; right: 16px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 4; max-width: 260px; font: 400 10.5px/1.4 var(--mono); color: var(--tinta-2); text-align: right; text-shadow: 0 0 6px var(--chao); }
+
+
+  /* ---- ambiente real ---- */
+  .real { position: fixed; z-index: 8; top: calc(16px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; padding: 10px 10px 10px 18px; max-width: calc(100vw - 32px); }
+  .real-txt { display: grid; gap: 2px; min-width: 0; }
+  .real-txt .tipo { font: 500 11px/1.2 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--sape); }
+  .real-txt strong { font: 700 18px/1.1 var(--display); }
+  .real-txt #realStatus { font: 400 11px/1.2 var(--mono); color: var(--tinta-2); }
+  .btn.real { background: var(--sape); border-color: var(--sape); color: #fff; }
+  .lugares .selo { font: 500 10px/1 var(--mono); color: #fff; background: var(--sape); padding: 3px 6px; border-radius: 99px; }
+  body.em-real .marca, body.em-real .lugares, body.em-real .aviso { display: none; }
+  .alinhar { position: fixed; z-index: 8; right: 16px; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); width: 230px; padding: 12px; display: grid; gap: 6px; font-size: 12px; }
+  .alinhar label { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .alinhar input[type="number"] { width: 96px; font: 400 12px var(--mono); padding: 3px 6px; border: 1px solid var(--linha); border-radius: 6px; background: transparent; color: var(--tinta); }
+  .alinhar .chk { justify-content: flex-start; }
+  .alinhar textarea { font: 400 10px/1.3 var(--mono); width: 100%; resize: none; background: transparent; color: var(--tinta); border: 1px solid var(--linha); border-radius: 6px; }
+  /* ---- estilo ---- */
+  .estilo { position: fixed; z-index: 4; right: 16px; top: calc(222px + env(safe-area-inset-top, 0px)); display: flex; padding: 3px; gap: 2px; }
+  .estilo button { border: 0; background: transparent; padding: 7px 13px; border-radius: 9px; cursor: pointer; font: 600 12.5px/1 var(--corpo); color: var(--tinta-2); }
+  .estilo button[aria-pressed="true"] { background: var(--tinta); color: var(--chao); }
+  body:has(#painel:not([hidden])) .estilo { display: none; }
+
+  /* ---- vistas fotográficas ---- */
+  .pino.vista { width: 34px; height: 34px; border-radius: 50%; background: var(--sape); color: #fff; border: 2px solid #fff; box-shadow: 0 4px 14px rgba(0, 0, 0, .3); flex-direction: row; justify-content: center; }
+  .pino.vista svg { width: 18px; height: 18px; }
+  .pino.vista span { position: absolute; left: 50%; bottom: calc(100% + 6px); transform: translateX(-50%); opacity: 0; transition: opacity .2s; font: 500 10.5px/1 var(--mono); background: var(--vidro); color: var(--tinta); border: 1px solid var(--linha); padding: 4px 7px; }
+  .pino.vista:hover span, .pino.vista:focus-visible span { opacity: 1; }
+  .pino.vista:hover { background: var(--tinta); }
+  .btn.foto { background: var(--sape); border-color: var(--sape); color: #fff; }
+  .foto-hud { position: fixed; z-index: 8; left: 50%; transform: translateX(-50%); bottom: calc(76px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 14px; padding: 8px 8px 8px 16px; max-width: calc(100vw - 32px); flex-wrap: wrap; justify-content: center; }
+  .foto-txt { display: grid; gap: 1px; min-width: 0; }
+  .foto-txt .tipo { font: 500 10.5px/1.2 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--sape); }
+  .foto-txt strong { font: 700 17px/1.1 var(--display); }
+  .foto-txt #fotoInfo { font: 400 11px/1.2 var(--mono); color: var(--tinta-2); }
+  .foto-nav { display: flex; align-items: center; gap: 6px; font: 500 12px/1 var(--mono); font-variant-numeric: tabular-nums; color: var(--tinta-2); }
+  .foto-nav button { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--linha); background: transparent; cursor: pointer; font-size: 18px; line-height: 1; }
+  .foto-nav button:hover:not(:disabled) { border-color: var(--sape); }
+  .foto-nav button:disabled { opacity: .35; cursor: default; }
+  .foto-acoes { display: flex; gap: 6px; }
+  body.em-foto .marca, body.em-foto .lugares, body.em-foto .aviso, body.em-foto .estilo, body.em-foto .dica { display: none; }
+  body.em-foto #palco canvas { cursor: grab; }
+  body.em-foto #palco canvas:active { cursor: grabbing; }
+  .calibrar { position: fixed; z-index: 9; left: 16px; top: calc(16px + env(safe-area-inset-top, 0px)); width: 250px; padding: 12px; display: grid; gap: 6px; font-size: 12px; }
+  .calibrar label { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .calibrar input[type="text"], .calibrar input[type="number"] { width: 120px; font: 400 12px var(--mono); padding: 3px 6px; border: 1px solid var(--linha); border-radius: 6px; background: transparent; color: var(--tinta); }
+  .calibrar textarea { font: 400 10px/1.3 var(--mono); width: 100%; resize: none; background: transparent; color: var(--tinta); border: 1px solid var(--linha); border-radius: 6px; }
+  body.em-foto .calibrar ~ .foto-hud { bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+
+  @media (max-width: 860px) {
+    .marca { padding: 12px 14px 10px; width: calc(100vw - 32px - 150px); }
+    .marca .geo { display: none; }
+    .marca h1 { margin-top: 0; }
+    .marca h1 { font-size: 21px; }
+    .marca .fatos, .marca .nota a { display: none; }
+    .mapa canvas { width: 124px; height: 93px; }
+    .mapa .leg { display: none; }
+    .lugares { top: auto; bottom: calc(76px + env(safe-area-inset-bottom, 0px)); width: auto; right: 16px; max-height: none; overflow-x: auto; overflow-y: hidden; padding: 4px; }
+    .lugares h2 { display: none; }
+    .lugares ul { grid-auto-flow: column; gap: 4px; }
+    .lugares button { white-space: nowrap; padding: 7px 11px; }
+    .lugares .tipo, .lugares .sem { display: none; }
+    .dica { bottom: calc(130px + env(safe-area-inset-bottom, 0px)); }
+    .painel { left: 16px; right: 16px; width: auto; top: auto; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); max-height: 62%; z-index: 9; }
+    .aviso { display: none; }
+    .modos button { padding: 9px 12px; }
+    .estilo { top: calc(132px + env(safe-area-inset-top, 0px)); }
+    .foto-hud { left: 16px; right: 16px; transform: none; max-width: none; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); gap: 8px; padding: 10px; justify-content: space-between; }
+    .foto-txt { flex-basis: 100%; }
+    .foto-txt #fotoInfo { display: none; }
+    .foto-acoes .btn { padding: 8px 12px; }
+    body.em-foto .modos { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div id="palco" aria-label="Maquete 3D da chácara"></div>
+<div id="pinos"></div>
+
+<section class="marca vidro" aria-label="Imóvel">
+  <div class="geo">Bofete · SP · 23°08′S 48°16′W</div>
+  <h1 id="titulo">Chácara maravilhosa</h1>
+  <div class="sub" id="subtitulo">Piscina aquecida</div>
+  <div class="fatos" id="fatos"></div>
+  <div class="nota">★ <strong id="nota">5,0</strong> <span id="avaliacoes">27 avaliações</span> <a id="airbnb" href="#" target="_blank" rel="noopener">anúncio</a></div>
+</section>
+
+<nav class="lugares vidro" aria-label="Lugares">
+  <h2>Explorar</h2>
+  <ul id="listaLugares"></ul>
+</nav>
+
+<div class="mapa vidro" id="mapaCaixa">
+  <canvas id="minimapa" width="432" height="324" aria-label="Mapa da propriedade — clique para ir até o ponto"></canvas>
+  <div class="leg"><span>N ↑</span><span>~145 × 108 m</span></div>
+</div>
+
+<div class="estilo vidro" id="estilo" role="group" aria-label="Estilo da maquete">
+  <button data-estilo="texturas" aria-pressed="true">Realista</button>
+  <button data-estilo="maquete" aria-pressed="false">Maquete</button>
+</div>
+
+<div class="modos vidro" role="group" aria-label="Modo de visualização">
+  <button id="modoAereo" aria-pressed="true">Vista aérea</button>
+  <button id="modoInterior" aria-pressed="false">Interiores</button>
+  <button id="modoCaminhar" aria-pressed="false">Caminhar</button>
+</div>
+<div class="dica" id="dica">Arraste para girar · role para aproximar</div>
+
+<aside class="painel vidro" id="painel" hidden aria-live="polite">
+  <header>
+    <div class="tipo" id="pTipo"></div>
+    <h2 id="pNome"></h2>
+    <button class="fechar" id="pFechar" aria-label="Fechar">×</button>
+  </header>
+  <div class="corpo" id="pCorpo"></div>
+</aside>
+
+
+<form class="calibrar vidro" id="calibrar" hidden onsubmit="return false">
+  <strong>Calibrar vista · <span id="cal_n">abra uma foto</span></strong>
+  <label>pos (px) <input id="cal_pos" type="text"></label>
+  <label>olha (px) <input id="cal_olha" type="text"></label>
+  <label>altura (m) <input id="cal_alt" type="number" step="0.1"></label>
+  <label>inclinação° <input id="cal_incl" type="number" step="1"></label>
+  <label>giro° <input id="cal_giro" type="number" step="0.5"></label>
+  <label>lente° <input id="cal_fov" type="number" step="1"></label>
+  <label>foto <input id="cal_opac" type="range" min="0" max="1" step="0.05" value="0.5"></label>
+  <textarea id="cal_json" rows="3" readonly></textarea>
+  <button class="btn sec" id="cal_copiar" type="button">Copiar linha</button>
+</form>
+<div class="foto-hud vidro" id="fotoHud" hidden>
+  <div class="foto-txt"><span class="tipo" id="fotoTipo">Foto real</span><strong id="fotoNome"></strong><span id="fotoInfo"></span></div>
+  <div class="foto-nav"><button id="fotoAnt" aria-label="Foto anterior">‹</button><span id="fotoConta"></span><button id="fotoProx" aria-label="Próxima foto">›</button></div>
+  <div class="foto-acoes"><button class="btn sec" id="fotoAmpliar">Foto inteira</button><button class="btn" id="fotoSair">Voltar à maquete</button></div>
+</div>
+
+<div class="real vidro" id="real" hidden>
+  <div class="real-txt"><span class="tipo">Ambiente real · <span id="realAviso"></span></span><strong id="realNome"></strong><span id="realStatus"></span></div>
+  <button class="btn" id="realSair">Voltar à maquete</button>
+</div>
+<form class="alinhar vidro" id="alinhar" hidden onsubmit="return false">
+  <strong>Alinhar captura</strong>
+  <label>X <input id="al_x" type="number" step="0.1"></label>
+  <label>Y <input id="al_y" type="number" step="0.05"></label>
+  <label>Z <input id="al_z" type="number" step="0.1"></label>
+  <label>Giro° <input id="al_rotY" type="number" step="1"></label>
+  <label>Escala <input id="al_escala" type="number" step="0.01"></label>
+  <label>Piso <input id="al_piso" type="number" step="0.05"></label>
+  <label class="chk"><input id="al_inverteX" type="checkbox"> inverter eixo</label>
+  <label class="chk"><input id="al_maquete" type="checkbox"> mostrar maquete</label>
+  <textarea id="al_json" rows="3" readonly></textarea>
+  <button class="btn sec" id="al_copiar" type="button">Copiar pose</button>
+</form>
+<div class="joy" id="joy" hidden aria-hidden="true"></div>
+
+<div class="caixa" id="caixa" hidden role="dialog" aria-label="Foto">
+  <img id="caixaImg" alt="">
+  <div class="barra"><button id="caixaAnt">← anterior</button><span id="caixaLeg"></span><button id="caixaProx">próxima →</button><button id="caixaFechar">fechar</button></div>
+</div>
+
+<div class="aviso">Maquete ilustrativa montada a partir das fotos e plantas do anúncio. Proporções aproximadas. As fotos são as do anúncio; o relevo delas é estimado por IA.</div>
+
+<div class="abertura" id="abertura"><div><strong>Chácara maravilhosa</strong><span id="carregando">montando a maquete…</span></div></div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/",
+  "@sparkjsdev/spark": "https://cdn.jsdelivr.net/npm/@sparkjsdev/spark@2.3.1/dist/spark.module.min.js"
+} }
+</script>
+<script type="module" src="app.js"></script>
