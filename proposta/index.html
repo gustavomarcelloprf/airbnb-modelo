@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Proposta · Site 3D do seu imóvel</title>
+<meta name="description" content="Seu imóvel num site 3D interativo: o hóspede passeia pela casa inteira antes de reservar.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Proposta · Site 3D do seu imóvel">
+<meta property="og:description" content="O hóspede passeia pela casa inteira antes de reservar. Veja os pacotes.">
+<meta property="og:image" content="https://gustavomarcelloprf.github.io/airbnb-modelo/proposta/capa.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --chao:#f4f3ef; --papel:#fffefb; --tinta:#16242a; --suave:#5d6b70; --linha:#dedad1;
+  --mata:#123c3a; --mata-tinta:#eef4f1; --destaque:#d99a2b; --destaque-claro:#fbf1dc; --zap:#1f8f4e;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--chao);color:var(--tinta);font:16px/1.55 "Instrument Sans",system-ui,-apple-system,sans-serif;padding:0 16px env(safe-area-inset-bottom,0)}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;margin:0;text-wrap:balance;line-height:1.15}
+.wrap{max-width:860px;margin:0 auto;padding-block:20px 72px;display:grid;gap:44px}
+a{color:var(--mata)}
+.capa{background:var(--mata);color:var(--mata-tinta);border-radius:20px;overflow:hidden;display:grid}
+.capa img{width:100%;height:auto;max-width:100%;aspect-ratio:1200/630;object-fit:cover;display:block}
+.capa .txt{padding:24px 22px 26px;display:grid;gap:12px}
+.rot{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.capa h1{font-size:clamp(28px,6vw,42px);font-weight:800}
+.capa p{margin:0;max-width:60ch;opacity:.9}
+.para{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;border-top:1px solid rgba(255,255,255,.18);padding-top:12px;margin-top:4px}
+.para b{font-weight:600;opacity:.65;margin-right:4px}
+section{display:grid;gap:16px}
+.wrap>*,section>*{min-width:0}
+h2{font-size:clamp(22px,4.5vw,28px);font-weight:800}
+.lead{color:var(--suave);margin:0;max-width:62ch}
+.recursos{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.recurso{background:var(--papel);border:1px solid var(--linha);border-radius:14px;padding:16px}
+.recurso h3{font-size:16px;margin-bottom:4px}
+.recurso p{margin:0;font-size:14px;color:var(--suave)}
+.demo{display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;background:var(--destaque-claro);border-radius:14px;padding:16px 18px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px "Instrument Sans",sans-serif;text-decoration:none;border-radius:10px;padding:11px 16px;border:0;cursor:pointer;background:var(--mata);color:var(--mata-tinta)}
+.btn.zap{background:var(--zap);color:#fff}
+.btn.claro{background:var(--papel);color:var(--tinta);border:1px solid var(--linha)}
+.pacotes{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));align-items:start}
+.pacote{background:var(--papel);border:1px solid var(--linha);border-radius:18px;padding:20px;display:grid;gap:12px;position:relative}
+.pacote.rec{border:2px solid var(--destaque);box-shadow:0 6px 24px rgba(217,154,43,.18)}
+.selo{position:absolute;top:-12px;left:18px;background:var(--destaque);color:#2a1d05;font-size:12px;font-weight:600;border-radius:999px;padding:3px 10px;display:none}
+.pacote.rec .selo{display:block}
+.pacote h3{font-size:22px}
+.pacote .pitch{margin:0;color:var(--suave);font-size:14px}
+.preco{display:grid;gap:2px}
+.preco .valor{font:800 30px "Bricolage Grotesque",sans-serif;font-variant-numeric:tabular-nums}
+.preco small{color:var(--suave);font-size:14px}
+.pacote ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:14.5px}
+.prazo{font-size:13px;color:var(--suave);border-top:1px solid var(--linha);padding-top:10px}
+.tabela{overflow-x:auto;background:var(--papel);border:1px solid var(--linha);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--linha);vertical-align:top}
+th{font-weight:600;background:var(--mata);color:var(--mata-tinta)}
+th:first-child{border-top-left-radius:13px} th:last-child{border-top-right-radius:13px}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--suave)}
+td.num{font-variant-numeric:tabular-nums;font-weight:600}
+.passos{margin:0;padding:0;list-style:none;display:grid;gap:10px;counter-reset:p}
+.passos li{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start}
+.passos li::before{counter-increment:p;content:counter(p);width:32px;height:32px;border-radius:50%;background:var(--mata);color:var(--mata-tinta);display:grid;place-items:center;font-weight:600;font-size:14px}
+.cond{margin:0;padding-left:18px;display:grid;gap:8px}
+.fim{background:var(--mata);color:var(--mata-tinta);border-radius:20px;padding:26px 22px;display:grid;gap:14px}
+.fim h2{color:var(--mata-tinta)}
+.fim p{margin:0;opacity:.9}
+.contato{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:15px}
+.contato b{font-weight:600}
+.rodape{font-size:12px;color:var(--suave);text-align:center}
+
+/* modo edição (só para o vendedor) */
+.barra{position:sticky;top:0;z-index:10;margin:0 -16px;padding:10px 16px;padding-top:calc(10px + env(safe-area-inset-top,0px));background:#1d2b30;color:#e9eef0;display:none;gap:8px;flex-wrap:wrap;align-items:center;font-size:14px}
+body.vendedor .barra{display:flex}
+.barra .btn{padding:8px 12px;font-size:14px}
+.barra .msg{flex:1 1 100%;font-size:12.5px;opacity:.8}
+.barra label{display:flex;gap:6px;align-items:center}
+.barra select{font:inherit;border-radius:8px;padding:6px;border:0}
+body.editando [data-k]{outline:1.5px dashed var(--destaque);outline-offset:2px;border-radius:4px;cursor:text;min-width:1ch}
+body.editando [data-k]:focus{outline-style:solid;background:var(--destaque-claro);color:var(--tinta)}
+.capa [data-k]:focus{color:var(--tinta)}
+body.editando [data-k="obs"]:empty::before{content:"Observação opcional (ex.: condição especial)";color:var(--suave)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#1d2b30;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:calc(100% - 32px)}
+.toast.on{opacity:1}
+@media print{.barra,.toast{display:none!important}}
+</style>
+</head>
+<body>
+<div class="barra" id="barra">
+  <button class="btn claro" id="bEditar">Editar texto</button>
+  <label>Recomendado
+    <select id="sRec"><option value="">nenhum</option><option value="simples">Simples</option><option value="inter">Intermediário</option><option value="avanc">Avançado</option></select>
+  </label>
+  <button class="btn" id="bCopiar">Copiar link do cliente</button>
+  <a class="btn zap" id="bZap" href="#" target="_blank" rel="noopener">Enviar no WhatsApp</a>
+  <button class="btn claro" id="bLimpar">Nova proposta</button>
+  <span class="msg" id="bMsg">Modo vendedor: clique em “Editar texto”, toque em qualquer texto contornado para mudar e depois envie. O cliente recebe a versão sem edição.</span>
+</div>
+
+<div class="wrap">
+  <header class="capa">
+    <img src="capa.jpg" alt="Exemplo de site 3D: chácara em Bofete vista de cima, com as construções marcadas" width="1200" height="630">
+    <div class="txt">
+      <span class="rot">Proposta comercial · Site 3D interativo</span>
+      <h1 data-k="titulo">Seu imóvel para o hóspede passear antes de reservar</h1>
+      <p data-k="intro">Transformamos as fotos do seu imóvel num site 3D interativo: o hóspede percorre a casa inteira, ambiente por ambiente, antes de mandar a primeira mensagem. Isso destaca o anúncio, responde dúvidas antes da conversa e leva à reserva direta, sem comissão de plataforma.</p>
+      <div class="para">
+        <span><b>Para</b><span data-k="cliente">Nome do cliente</span></span>
+        <span><b>Imóvel</b><span data-k="imovel">Nome do imóvel</span></span>
+        <span><b>Local</b><span data-k="local">Bairro, cidade</span></span>
+        <span><b>Data</b><span data-k="data" id="data"></span></span>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>O que você recebe</h2>
+    <p class="lead">Um site próprio do imóvel, que abre no celular direto pelo link do WhatsApp ou do Instagram.</p>
+    <div class="recursos">
+      <div class="recurso"><h3>Mapa 3D do imóvel</h3><p>A propriedade inteira em maquete, com as áreas marcadas: piscina, suítes, área gourmet, jardim.</p></div>
+      <div class="recurso"><h3>Vistas fotográficas</h3><p>Cada foto vira uma janela com profundidade; a câmera voa pelo mapa até onde a foto foi tirada.</p></div>
+      <div class="recurso"><h3>Ambientes em 3D</h3><p>Ambientes refeitos com luz e materiais fiéis às fotos, para o hóspede andar por dentro.</p></div>
+      <div class="recurso"><h3>Botão de reserva</h3><p>WhatsApp, preços e capacidade sempre à vista, para fechar direto com você.</p></div>
+    </div>
+    <div class="demo">
+      <span><b>Veja um exemplo pronto:</b> chácara em Bofete/SP.</span>
+      <a class="btn" href="https://gustavomarcelloprf.github.io/airbnb-modelo/clientes/chacara-bofete/site/" target="_blank" rel="noopener">Abrir o site 3D ↗</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Pacotes</h2>
+    <p class="lead">Três níveis, do site de entrada ao imóvel inteiro recriado em 3D. Todos incluem hospedagem, ajustes e suporte enquanto a mensalidade estiver ativa.</p>
+    <div class="pacotes">
+      <article class="pacote" id="p-simples">
+        <span class="selo">Recomendado para você</span>
+        <h3>Simples</h3>
+        <p class="pitch">Para começar a divulgar com um link que impressiona.</p>
+        <div class="preco"><span class="valor">R$ <span data-k="p1">1.200</span></span><small>implantação + R$ <span data-k="m1">49</span>/mês</small></div>
+        <ul>
+          <li>Vistas fotográficas de até 30 fotos</li>
+          <li>Mapa 3D simplificado do terreno, com as áreas marcadas</li>
+          <li>Botão de WhatsApp, capacidade e comodidades</li>
+          <li>Endereço gratuito (ex.: seuimovel.pages.dev)</li>
+        </ul>
+        <div class="prazo">Entrega em até <span data-k="d1">7</span> dias úteis</div>
+      </article>
+      <article class="pacote" id="p-inter">
+        <span class="selo">Recomendado para você</span>
+        <h3>Intermediário</h3>
+        <p class="pitch">O site completo, que vende o imóvel sozinho.</p>
+        <div class="preco"><span class="valor">R$ <span data-k="p2">3.500</span></span><small>implantação + R$ <span data-k="m2">89</span>/mês</small></div>
+        <ul>
+          <li>Tudo do Simples, sem limite de fotos</li>
+          <li>Maquete 3D fiel de todas as construções, com telhados, jardim e piscina</li>
+          <li>1 ambiente principal recriado em 3D com luz realista</li>
+          <li>Galeria por ambiente, preços por temporada e formulário para eventos</li>
+          <li>Domínio próprio .com.br configurado (registro anual pago pelo cliente, cerca de R$ 40)</li>
+          <li>Relatório mensal de visitas e cliques no WhatsApp</li>
+        </ul>
+        <div class="prazo">Entrega em até <span data-k="d2">15</span> dias úteis</div>
+      </article>
+      <article class="pacote" id="p-avanc">
+        <span class="selo">Recomendado para você</span>
+        <h3>Avançado</h3>
+        <p class="pitch">O imóvel inteiro para andar por dentro: casas de alto padrão e espaços de evento.</p>
+        <div class="preco"><span class="valor">R$ <span data-k="p3">6.900</span></span><small>implantação + R$ <span data-k="m3">149</span>/mês</small></div>
+        <ul>
+          <li>Tudo do Intermediário</li>
+          <li>Todos os ambientes internos recriados em 3D com luz realista</li>
+          <li>Passeio guiado automático, para enviar a hóspedes e noivos</li>
+          <li>Site em português e inglês</li>
+          <li>Calendário de disponibilidade integrado</li>
+          <li>Vídeo curto do passeio 3D para Reels e Stories</li>
+          <li>2 atualizações por ano (reforma, decoração nova)</li>
+        </ul>
+        <div class="prazo">Entrega em até <span data-k="d3">30</span> dias úteis</div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <h2>Comparativo</h2>
+    <div class="tabela">
+      <table>
+        <thead><tr><th>Item</th><th>Simples</th><th>Intermediário</th><th>Avançado</th></tr></thead>
+        <tbody>
+          <tr><td>Implantação</td><td class="num">R$ <span data-k="p1">1.200</span></td><td class="num">R$ <span data-k="p2">3.500</span></td><td class="num">R$ <span data-k="p3">6.900</span></td></tr>
+          <tr><td>Mensalidade</td><td class="num">R$ <span data-k="m1">49</span></td><td class="num">R$ <span data-k="m2">89</span></td><td class="num">R$ <span data-k="m3">149</span></td></tr>
+          <tr><td>Vistas fotográficas</td><td>até 30 fotos</td><td>ilimitadas</td><td>ilimitadas</td></tr>
+          <tr><td>Maquete 3D</td><td>simplificada</td><td>fiel, todas as construções</td><td>fiel, todas as construções</td></tr>
+          <tr><td>Ambientes em 3D</td><td>—</td><td>1</td><td>todos</td></tr>
+          <tr><td>Botão de WhatsApp</td><td>sim</td><td>sim</td><td>sim</td></tr>
+          <tr><td>Preços e formulário de eventos</td><td>—</td><td>sim</td><td>sim</td></tr>
+          <tr><td>Domínio próprio</td><td>—</td><td>sim</td><td>sim</td></tr>
+          <tr><td>Relatório de visitas</td><td>—</td><td>mensal</td><td>mensal</td></tr>
+          <tr><td>Passeio guiado e vídeo para Reels</td><td>—</td><td>—</td><td>sim</td></tr>
+          <tr><td>Português e inglês</td><td>—</td><td>—</td><td>sim</td></tr>
+          <tr><td>Calendário de disponibilidade</td><td>—</td><td>—</td><td>sim</td></tr>
+          <tr><td>Entrega (dias úteis)</td><td class="num" data-k="d1">7</td><td class="num" data-k="d2">15</td><td class="num" data-k="d3">30</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Gestoras e imobiliárias</h2>
+    <p class="lead">Para carteiras de imóveis, o desconto cresce com o volume e vale para qualquer pacote. Inclui uma página da gestora reunindo todos os imóveis em 3D, com a marca dela.</p>
+    <div class="tabela">
+      <table style="min-width:420px">
+        <thead><tr><th>Imóveis contratados</th><th>Desconto na implantação</th><th>Desconto na mensalidade</th></tr></thead>
+        <tbody>
+          <tr><td>3 a 9</td><td class="num">20%</td><td class="num">10%</td></tr>
+          <tr><td>10 a 24</td><td class="num">30%</td><td class="num">20%</td></tr>
+          <tr><td>25 ou mais</td><td class="num">40%</td><td class="num">30%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Como funciona</h2>
+    <p class="lead">Sem visita técnica: trabalhamos com as fotos que o imóvel já tem.</p>
+    <ol class="passos">
+      <li><span><b>Aprovação.</b> Você escolhe o pacote e paga a entrada de 50%.</span></li>
+      <li><span><b>Material.</b> Você envia as fotos em alta resolução (de preferência 30 ou mais, cobrindo todos os ambientes), a planta ou um croqui e o link do anúncio.</span></li>
+      <li><span><b>Produção.</b> Montamos a maquete, as vistas e os ambientes em 3D.</span></li>
+      <li><span><b>Revisão.</b> Você recebe o link de prévia e pede até 2 rodadas de ajustes.</span></li>
+      <li><span><b>Publicação.</b> O site vai ao ar no endereço definitivo e você paga os 50% restantes.</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Condições</h2>
+    <ul class="cond">
+      <li><b>Pagamento:</b> 50% na aprovação e 50% na publicação, por Pix ou boleto. Implantação em até 3x no cartão.</li>
+      <li><b>Mensalidade:</b> começa no mês seguinte à publicação. Sem fidelidade; cancelando, o site sai do ar no fim do mês pago.</li>
+      <li><b>Plano anual:</b> pagando 12 meses à vista, 2 meses são grátis.</li>
+      <li><b>Não incluso:</b> sessão de fotos profissional, registro do domínio e anúncios pagos.</li>
+      <li><b>Direitos:</b> as fotos continuam suas; o site e o modelo 3D são licenciados enquanto a mensalidade estiver ativa.</li>
+      <li><b>Validade:</b> esta proposta vale por <span data-k="validade">15</span> dias a partir da data acima.</li>
+      <li data-k="obs" id="obs" hidden></li>
+    </ul>
+  </section>
+
+  <section class="fim">
+    <h2>Vamos começar?</h2>
+    <p>Responda com o pacote escolhido e enviamos o link para pagamento da entrada e a lista de fotos que precisamos.</p>
+    <div class="contato">
+      <span><b data-k="vendedor">Guilherme</b></span>
+      <span>WhatsApp: <span data-k="fone">(DDD) 9XXXX-XXXX</span></span>
+      <span>E-mail: <span data-k="email">seu@email.com</span></span>
+    </div>
+    <div><a class="btn zap" id="cZap" href="#" target="_blank" rel="noopener">Quero fechar pelo WhatsApp</a></div>
+  </section>
+
+  <p class="rodape">Proposta personalizada · os valores podem variar conforme o tamanho do imóvel.</p>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const qs = new URLSearchParams(location.search);
+const vendedor = qs.has('editar');
+const $ = s => document.querySelector(s);
+const campos = () => [...document.querySelectorAll('[data-k]')];
+const padrao = {};
+campos().forEach(el => { if (!(el.dataset.k in padrao)) padrao[el.dataset.k] = el.textContent; });
+padrao.data = new Date().toLocaleDateString('pt-BR');
+padrao.obs = '';
+let dados = {};
+
+const b64 = {
+  enc: u8 => btoa(String.fromCharCode(...u8)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''),
+  dec: s => Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')), c => c.charCodeAt(0))
+};
+async function codifica(obj){
+  const bytes = new TextEncoder().encode(JSON.stringify(obj));
+  if ('CompressionStream' in window){
+    const s = new Blob([bytes]).stream().pipeThrough(new CompressionStream('deflate-raw'));
+    return 'z' + b64.enc(new Uint8Array(await new Response(s).arrayBuffer()));
+  }
+  return 'j' + b64.enc(bytes);
+}
+async function decodifica(t){
+  const bytes = b64.dec(t.slice(1));
+  if (t[0] === 'z'){
+    const s = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+    return JSON.parse(await new Response(s).text());
+  }
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+
+function aplica(){
+  const v = {...padrao, ...dados};
+  campos().forEach(el => { if (document.activeElement !== el) el.textContent = v[el.dataset.k] ?? ''; });
+  $('#obs').hidden = !v.obs && !document.body.classList.contains('editando');
+  if (document.body.classList.contains('editando') && !v.obs) $('#obs').textContent = '';
+  document.querySelectorAll('.pacote').forEach(p => p.classList.toggle('rec', p.id === 'p-' + (v.rec || '')));
+  $('#sRec').value = v.rec || '';
+  const fone = (v.fone || '').replace(/\D/g, '');
+  const zap = $('#cZap');
+  if (fone.length >= 10){
+    const n = fone.startsWith('55') ? fone : '55' + fone;
+    const txt = `Olá, ${v.vendedor}! Vi a proposta do site 3D${v.imovel && v.imovel !== padrao.imovel ? ' para ' + v.imovel : ''} e quero conversar sobre o pacote `;
+    zap.href = `https://wa.me/${n}?text=${encodeURIComponent(txt)}`; zap.hidden = false;
+  } else zap.hidden = true;
+}
+function mudou(){
+  const atual = {};
+  campos().forEach(el => { const k = el.dataset.k, t = el.textContent.trim(); if (t !== (padrao[k] ?? '').trim()) atual[k] = t; });
+  if (dados.rec) atual.rec = dados.rec;
+  dados = atual;
+  // sincroniza campos repetidos (preços, prazos)
+  aplica();
+  salvaRascunho();
+}
+let tRasc;
+function salvaRascunho(){
+  clearTimeout(tRasc);
+  tRasc = setTimeout(async () => {
+    try { localStorage.setItem('proposta-rascunho', JSON.stringify(dados)); } catch(e){}
+    const u = await linkCliente();
+    history.replaceState(null, '', u.replace(/\?/, '?editar&'));
+    $('#bZap').href = 'https://wa.me/?text=' + encodeURIComponent(textoEnvio(u));
+  }, 250);
+}
+async function linkCliente(){
+  const base = location.origin + location.pathname;
+  return Object.keys(dados).length ? `${base}?p=${await codifica(dados)}` : base;
+}
+function textoEnvio(u){
+  const v = {...padrao, ...dados};
+  const nome = v.cliente && v.cliente !== padrao.cliente ? v.cliente.split(' ')[0] : '';
+  return `${nome ? 'Oi, ' + nome + '! ' : ''}Segue a proposta do site 3D${v.imovel && v.imovel !== padrao.imovel ? ' para ' + v.imovel : ''}: ${u}`;
+}
+function aviso(t){ const el = $('#toast'); el.textContent = t; el.classList.add('on'); setTimeout(() => el.classList.remove('on'), 2200); }
+
+(async () => {
+  const p = qs.get('p');
+  if (p) { try { dados = await decodifica(p); } catch(e){ dados = {}; } }
+  else if (vendedor) { try { dados = JSON.parse(localStorage.getItem('proposta-rascunho') || '{}'); } catch(e){ dados = {}; } }
+  aplica();
+  if (!vendedor) return;
+  document.body.classList.add('vendedor');
+  salvaRascunho();
+  $('#bEditar').onclick = () => {
+    const on = document.body.classList.toggle('editando');
+    campos().forEach(el => el.contentEditable = on ? 'plaintext-only' : 'false');
+    if (on && !campos()[0].isContentEditable) campos().forEach(el => el.contentEditable = 'true');
+    $('#bEditar').textContent = on ? 'Concluir edição' : 'Editar texto';
+    if (on) { $('#obs').hidden = false; if (!dados.obs) $('#obs').dataset.ph = '1'; }
+    aplica();
+  };
+  document.addEventListener('input', e => {
+    const k = e.target.dataset?.k; if (!k) return;
+    document.querySelectorAll(`[data-k="${k}"]`).forEach(o => { if (o !== e.target) o.textContent = e.target.textContent; });
+    mudou();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.dataset?.k && e.target.dataset.k !== 'intro') { e.preventDefault(); e.target.blur(); } });
+  $('#sRec').onchange = e => { dados.rec = e.target.value; if (!dados.rec) delete dados.rec; aplica(); salvaRascunho(); };
+  $('#bCopiar').onclick = async () => {
+    const u = await linkCliente();
+    try { await navigator.clipboard.writeText(u); aviso('Link do cliente copiado'); }
+    catch(e){ prompt('Copie o link do cliente:', u); }
+  };
+  $('#bZap').onclick = async e => { e.currentTarget.href = 'https://wa.me/?text=' + encodeURIComponent(textoEnvio(await linkCliente())); };
+  $('#bLimpar').onclick = () => {
+    if (!confirm('Começar uma proposta nova? Os campos voltam ao padrão.')) return;
+    dados = {}; try { localStorage.removeItem('proposta-rascunho'); } catch(e){}
+    history.replaceState(null, '', location.pathname + '?editar'); aplica(); aviso('Proposta em branco');
+  };
+})();
+</script>
+</body>
+</html>
