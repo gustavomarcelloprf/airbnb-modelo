@@ -4,53 +4,53 @@
 <meta name="description" content="Maquete 3D navegável da Chácara maravilhosa em Bofete/SP">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
   :root {
-    --chao: #e9eeea;
-    --vidro: rgba(246, 249, 246, 0.86);
-    --tinta: #15241f;
-    --tinta-2: #4b5d56;
-    --linha: rgba(21, 36, 31, 0.12);
-    --sape: #a96a22;
-    --sape-suave: rgba(169, 106, 34, 0.14);
+    --chao: #efeeeb;
+    --vidro: rgba(250, 249, 247, 0.88);
+    --tinta: #1d1c1a;
+    --tinta-2: #5f5c56;
+    --linha: rgba(29, 28, 26, 0.12);
+    --sape: #6b6760;
+    --sape-suave: rgba(107, 103, 96, 0.14);
     --agua: #1f8fa6;
-    --pino: #15241f;
-    --pino-texto: #f4f7f4;
-    --sombra: 0 10px 30px rgba(14, 28, 23, 0.16), 0 1px 3px rgba(14, 28, 23, 0.12);
+    --pino: #1d1c1a;
+    --pino-texto: #f5f4f1;
+    --sombra: 0 10px 30px rgba(20, 19, 18, 0.14), 0 1px 3px rgba(20, 19, 18, 0.10);
     --raio: 14px;
-    --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
-    --corpo: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
-    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    --display: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --corpo: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       color-scheme: dark;
-      --chao: #0f1714;
-      --vidro: rgba(16, 25, 22, 0.84);
-      --tinta: #e6eee9;
-      --tinta-2: #9db0a8;
-      --linha: rgba(230, 238, 233, 0.13);
-      --sape: #e0a35a;
-      --sape-suave: rgba(224, 163, 90, 0.16);
+      --chao: #161615;
+      --vidro: rgba(32, 31, 29, 0.86);
+      --tinta: #ecebe8;
+      --tinta-2: #a9a59d;
+      --linha: rgba(236, 235, 232, 0.13);
+      --sape: #c4bfb5;
+      --sape-suave: rgba(196, 191, 181, 0.16);
       --agua: #5cc6db;
-      --pino: #f1f5f2;
-      --pino-texto: #12201b;
+      --pino: #f5f4f1;
+      --pino-texto: #1d1c1a;
       --sombra: 0 10px 30px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.4);
     }
   }
   :root[data-theme="dark"] {
     color-scheme: dark;
-    --chao: #0f1714;
-    --vidro: rgba(16, 25, 22, 0.84);
-    --tinta: #e6eee9;
-    --tinta-2: #9db0a8;
-    --linha: rgba(230, 238, 233, 0.13);
-    --sape: #e0a35a;
-    --sape-suave: rgba(224, 163, 90, 0.16);
+    --chao: #161615;
+    --vidro: rgba(32, 31, 29, 0.86);
+    --tinta: #ecebe8;
+    --tinta-2: #a9a59d;
+    --linha: rgba(236, 235, 232, 0.13);
+    --sape: #c4bfb5;
+    --sape-suave: rgba(196, 191, 181, 0.16);
     --agua: #5cc6db;
-    --pino: #f1f5f2;
-    --pino-texto: #12201b;
+    --pino: #f5f4f1;
+    --pino-texto: #1d1c1a;
     --sombra: 0 10px 30px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.4);
   }
 
@@ -148,7 +148,7 @@
   .fotos img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s; }
   .fotos button:hover img { transform: scale(1.04); }
   .fotos .n.local::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--sape); margin-right: 5px; vertical-align: 1px; }
-  .fotos .n { position: absolute; left: 6px; bottom: 6px; font: 500 10px/1 var(--mono); background: rgba(10, 18, 15, .7); color: #fff; padding: 3px 5px; border-radius: 4px; }
+  .fotos .n { position: absolute; left: 6px; bottom: 6px; font: 500 10px/1 var(--mono); background: rgba(20, 19, 18, .7); color: #fff; padding: 3px 5px; border-radius: 4px; }
   .vazio { border: 1px dashed var(--sape); border-radius: 10px; padding: 12px 14px; color: var(--tinta-2); font-size: 13px; }
   .vazio b { color: var(--sape); }
   .comodos { display: grid; gap: 6px; }
@@ -179,9 +179,9 @@
   .joy::after { content: ""; position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: var(--tinta); opacity: .75; transform: translate(var(--jx, 0px), var(--jy, 0px)); }
 
   /* ---- lightbox ---- */
-  .caixa { position: fixed; inset: 0; z-index: 20; background: rgba(8, 14, 12, .92); display: grid; grid-template-rows: 1fr auto; padding: 16px; padding-block: calc(16px + env(safe-area-inset-top, 0px)) calc(16px + env(safe-area-inset-bottom, 0px)); }
+  .caixa { position: fixed; inset: 0; z-index: 20; background: rgba(22, 21, 20, .92); display: grid; grid-template-rows: 1fr auto; padding: 16px; padding-block: calc(16px + env(safe-area-inset-top, 0px)) calc(16px + env(safe-area-inset-bottom, 0px)); }
   .caixa img { width: 100%; height: 100%; object-fit: contain; min-height: 0; }
-  .caixa .barra { display: flex; align-items: center; justify-content: center; gap: 14px; color: #e8efeb; font: 400 12px/1 var(--mono); padding-top: 12px; }
+  .caixa .barra { display: flex; align-items: center; justify-content: center; gap: 14px; color: #ecebe8; font: 400 12px/1 var(--mono); padding-top: 12px; }
   .caixa button { background: rgba(255, 255, 255, .1); color: #fff; border: 1px solid rgba(255, 255, 255, .2); border-radius: 99px; padding: 8px 14px; cursor: pointer; }
 
   /* ---- abertura ---- */
