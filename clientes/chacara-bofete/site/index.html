@@ -262,6 +262,50 @@
     .foto-acoes .btn { padding: 8px 12px; }
     body.em-foto .modos { display: none; }
   }
+
+  /* ---- reservar + atalhos ---- */
+  .reservar { display: block; margin-top: 12px; text-align: center; padding: 10px 14px; border-radius: 99px; background: var(--tinta); color: var(--chao); font-weight: 600; text-decoration: none; }
+  .reservar:hover { filter: brightness(1.1); }
+  .atalhos { position: fixed; z-index: 5; right: 16px; top: calc(270px + env(safe-area-inset-top, 0px)); display: flex; gap: 8px; }
+  .atalhos button { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; cursor: pointer; font: 600 12.5px/1 var(--corpo); color: var(--tinta); }
+  .atalhos svg { width: 16px; height: 16px; }
+  #btnMapa { display: none; }
+  body:has(#painel:not([hidden])) .atalhos, body.em-foto .atalhos, body.em-real .atalhos { display: none; }
+
+  @media (max-width: 860px), (max-height: 560px) {
+    /* cabeçalho compacto: nome, nota e reservar numa faixa; toque no nome expande */
+    .marca { width: auto; right: 16px; padding: 10px 10px 10px 14px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 10px; }
+    .marca .geo, .marca .sub, .marca .fatos, .marca .nota a { display: none; }
+    .marca h1 { grid-column: 1; margin: 0; font-size: 17px; line-height: 1.15; cursor: pointer; }
+    .marca .nota { grid-column: 1; margin: 0; font-size: 12px; }
+    .marca .nota strong { font-size: 13px; }
+    .marca .reservar { grid-column: 2; grid-row: 1 / span 2; margin: 0; padding: 9px 14px; font-size: 13px; white-space: nowrap; }
+    .marca.aberta .sub, .marca.aberta .fatos { display: flex; grid-column: 1 / -1; }
+    .marca.aberta .sub { display: block; }
+    /* mapa e estilo só quando pedidos */
+    .mapa, .estilo { display: none; }
+    body.mapa-aberto .mapa { display: block; top: calc(124px + env(safe-area-inset-top, 0px)); }
+    body.mapa-aberto .estilo { display: flex; top: calc(232px + env(safe-area-inset-top, 0px)); }
+    .mapa canvas { width: 160px; height: 120px; }
+    .atalhos { top: calc(76px + env(safe-area-inset-top, 0px)); }
+    #btnMapa { display: inline-flex; }
+    #btnMapa[aria-expanded="true"] { background: var(--tinta); color: var(--chao); }
+  }
+  @media (max-height: 560px) and (orientation: landscape) {
+    /* celular deitado: cabeçalho vira selo, lugares e modos dividem uma barra só */
+    .marca { right: auto; max-width: 52vw; padding: 6px 6px 6px 12px; }
+    .marca h1 { font-size: 15px; }
+    .marca .reservar { padding: 8px 12px; }
+    .atalhos { top: calc(12px + env(safe-area-inset-top, 0px)); right: 16px; }
+    .marca { top: calc(12px + env(safe-area-inset-top, 0px)); }
+    body.mapa-aberto .mapa { top: calc(60px + env(safe-area-inset-top, 0px)); }
+    body.mapa-aberto .estilo { top: calc(196px + env(safe-area-inset-top, 0px)); }
+    .lugares { top: auto; left: 16px; right: 340px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+    .modos { left: auto; right: 16px; transform: none; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+    .modos button { padding: 8px 11px; }
+    .dica { display: none; }
+    .painel { max-height: calc(100% - 24px); bottom: 12px; top: 12px; left: auto; width: min(380px, 60vw); }
+  }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 
@@ -274,7 +318,13 @@
   <div class="sub" id="subtitulo">Piscina aquecida</div>
   <div class="fatos" id="fatos"></div>
   <div class="nota">★ <strong id="nota">5,0</strong> <span id="avaliacoes">27 avaliações</span> <a id="airbnb" href="#" target="_blank" rel="noopener">anúncio</a></div>
+  <a class="reservar" id="reservar" href="#" target="_blank" rel="noopener">Reservar</a>
 </section>
+
+<div class="atalhos" role="group" aria-label="Atalhos de câmera">
+  <button class="vidro" id="verTudo" aria-label="Ver a chácara inteira"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Ver tudo</span></button>
+  <button class="vidro" id="btnMapa" aria-expanded="false" aria-controls="mapaCaixa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Zm0 0v14m6-12v14" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Mapa</span></button>
+</div>
 
 <nav class="lugares vidro" aria-label="Lugares">
   <h2>Explorar</h2>

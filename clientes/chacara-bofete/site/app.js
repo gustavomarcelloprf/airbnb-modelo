@@ -62,7 +62,9 @@ const NEBLINA = new THREE.Color(0xb3bfcc);
 cena.fog = new THREE.Fog(NEBLINA, 260, 2300);
 cena.background = NEBLINA.clone();
 
-const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.1, 30000);
+// lente mais aberta com o celular em pé: a tela estreita corta muito dos lados com 50°
+function fovBase() { return innerHeight > innerWidth * 1.2 ? 64 : 50; }
+const camera = new THREE.PerspectiveCamera(fovBase(), innerWidth / innerHeight, 0.1, 30000);
 camera.position.set(-68, 38, 110);
 
 const controles = new OrbitControls(camera, renderer.domElement);
@@ -71,8 +73,9 @@ controles.dampingFactor = 0.08;
 controles.maxPolarAngle = deg(84);
 controles.minDistance = 6;
 controles.maxDistance = 260;
+let distMax = 260; // cresce quando a visão geral precisa de mais distância (tela estreita)
 controles.target.set(6, 0, 14);
-controles.autoRotate = true;
+controles.autoRotate = false;
 controles.autoRotateSpeed = 0.35;
 controles.addEventListener('start', () => { controles.autoRotate = false; });
 
@@ -83,7 +86,9 @@ gerente.onLoad = () => {
   renderer.shadowMap.needsUpdate = true;
   $('abertura').style.opacity = '0';
   setTimeout(() => ($('abertura').hidden = true), 700);
+  carregou = true; aoAbrir?.();
 };
+let aoAbrir = null, carregou = false; // definido depois que os lugares existem (voo de abertura)
 const carregador = new THREE.TextureLoader(gerente);
 const ANISO = renderer.capabilities.getMaxAnisotropy();
 const cacheTex = new Map();
@@ -1641,6 +1646,87 @@ const lugares = D.LUGARES.map((l) => {
 const comodos = Object.values(edificacoes).flatMap((e) => e.comodos);
 
 // ============================================================
+// Enquadramento da visão geral: a chácara inteira cabe na área livre da tela
+// (entre o cabeçalho e as barras de baixo), em qualquer formato de tela.
+// ============================================================
+const caixaGeral = (() => {
+  const b = new THREE.Box2();
+  for (const l of lugares) b.expandByPoint(new THREE.Vector2(l.alvo.x, l.alvo.z));
+  return b.expandByScalar(3);
+})();
+const POSE_PC = { pos: new THREE.Vector3(-68, 38, 110), alvo: new THREE.Vector3(6, 0, 14) };
+const AZ_PC = Math.atan2(POSE_PC.pos.x - POSE_PC.alvo.x, POSE_PC.pos.z - POSE_PC.alvo.z);
+const telaCompacta = () => innerWidth <= 860 || innerHeight <= 560;
+// área ocupada pela interface (px) em cada formato
+function margensTela() {
+  if (!telaCompacta()) return { topo: 0, base: 70, esq: 340, dir: 0 };
+  if (innerWidth > innerHeight) return { topo: 58, base: 62, esq: 0, dir: 0 };
+  return { topo: 124, base: 132, esq: 0, dir: 0 };
+}
+function ajustaPose(az, elev) {
+  const W = innerWidth, H = innerHeight, m = margensTela();
+  const cam = new THREE.PerspectiveCamera(fovBase(), W / H, 0.1, 5000);
+  const c = caixaGeral.getCenter(new THREE.Vector2()), mn = caixaGeral.min, mx = caixaGeral.max;
+  const cantos = [];
+  for (const x of [mn.x, mx.x]) for (const z of [mn.y, mx.y]) for (const y of [0, 6]) cantos.push(new THREE.Vector3(x, y, z));
+  const dirV = new THREE.Vector3(Math.sin(az) * Math.cos(elev), Math.sin(elev), Math.cos(az) * Math.cos(elev));
+  // nas laterais aceita cortar um pouco das bordas (o miolo da chácara é o que importa)
+  const xMin = -1 + (2 * m.esq) / W - 0.06, xMax = 1 - (2 * m.dir) / W + 0.06;
+  const yMin = -1 + (2 * m.base) / H + 0.03, yMax = 1 - (2 * m.topo) / H - 0.03;
+  let d = 150; const alvo = new THREE.Vector3(c.x, 0, c.y);
+  const v = new THREE.Vector3();
+  for (let i = 0; i < 8; i++) {
+    cam.position.copy(alvo).addScaledVector(dirV, d); cam.lookAt(alvo); cam.updateMatrixWorld();
+    let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+    for (const p of cantos) { v.copy(p).project(cam); x0 = Math.min(x0, v.x); x1 = Math.max(x1, v.x); y0 = Math.min(y0, v.y); y1 = Math.max(y1, v.y); }
+    const k = Math.max((x1 - x0) / (xMax - xMin), (y1 - y0) / (yMax - yMin));
+    // centraliza o conjunto na área livre (desloca o alvo no plano da tela)
+    const meiaAlt = d * Math.tan(deg(fovBase()) / 2), meiaLarg = meiaAlt * (W / H);
+    const frente = alvo.clone().sub(cam.position).normalize();
+    const direita = new THREE.Vector3().crossVectors(frente, new THREE.Vector3(0, 1, 0)).normalize();
+    const cima = new THREE.Vector3().crossVectors(direita, frente);
+    alvo.addScaledVector(cima, ((y0 + y1) / 2 - (yMin + yMax) / 2) * meiaAlt);
+    alvo.addScaledVector(direita, ((x0 + x1) / 2 - (xMin + xMax) / 2) * meiaLarg);
+    d *= k;
+  }
+  return { pos: alvo.clone().addScaledVector(dirV, d), alvo, d };
+}
+function poseGeral() {
+  if (!telaCompacta()) return { pos: POSE_PC.pos.clone(), alvo: POSE_PC.alvo.clone() };
+  const retrato = innerHeight > innerWidth;
+  const elev = deg(retrato ? 56 : 30);
+  // em pé, testa também a chácara "deitada" na tela e fica com a que chega mais perto
+  const azs = retrato ? [AZ_PC, AZ_PC + Math.PI / 2, AZ_PC - Math.PI / 2] : [AZ_PC];
+  let melhor = null;
+  for (const az of azs) { const p = ajustaPose(az, elev); if (!melhor || p.d < melhor.d) melhor = p; }
+  distMax = Math.max(260, melhor.d * 1.6); cena.fog.near = Math.max(260, melhor.d + 120); controles.maxDistance = Math.max(controles.maxDistance, distMax);
+  return melhor;
+}
+function verTudo(dur = 1.6) {
+  if (!$('painel').hidden) $('pFechar').click();
+  if (foto || modoReal || modo !== 'aereo') $('modoAereo').click();
+  const g = poseGeral();
+  voa(g.pos, g.alvo, dur);
+  controles.autoRotate = false;
+}
+// abertura: começa afastado e de lado, e voa até a visão geral; depois gira devagar
+{
+  const g = poseGeral(), rel = g.pos.clone().sub(g.alvo);
+  rel.applyAxisAngle(new THREE.Vector3(0, 1, 0), deg(-50)).multiplyScalar(1.45);
+  rel.y = Math.max(rel.y, g.pos.y - g.alvo.y) * 1.25;
+  const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (semMovimento) camera.position.copy(g.pos); else camera.position.copy(g.alvo).add(rel);
+  controles.target.copy(g.alvo); camera.lookAt(g.alvo);
+  controles.maxDistance = Math.max(controles.maxDistance, rel.length() * 1.1);
+  aoAbrir = () => {
+    if (location.hash === '#caminhar' || modo !== 'aereo' || semMovimento) return;
+    const p = poseGeral();
+    voa(p.pos, p.alvo, 3.6, () => { controles.autoRotate = !matchMedia('(prefers-reduced-motion: reduce)').matches; });
+  };
+  if (carregou) aoAbrir();
+}
+
+// ============================================================
 // Ambientes reais (Gaussian Splatting — Fase 2)
 // ============================================================
 const AMBIENTES = [...(D.AMBIENTES_REAIS || [])];
@@ -1720,12 +1806,12 @@ function saiReal(trocando) {
   modoReal = null;
   document.body.classList.remove('em-real');
   $('mapaCaixa').hidden = false;
-  controles.minDistance = 6; controles.maxDistance = 260; controles.maxPolarAngle = deg(84);
+  controles.minDistance = 6; controles.maxDistance = distMax; controles.maxPolarAngle = deg(84);
   $('modoAereo').textContent = 'Vista aérea'; $('modoInterior').disabled = false;
   if (trocando === true) return;
   $('real').hidden = true; $('alinhar').hidden = true;
   setModo('aereo', { semVoo: true });
-  voa(new THREE.Vector3(-68, 38, 110), new THREE.Vector3(6, 0, 14), 1.4);
+  { const g = poseGeral(); voa(g.pos, g.alvo, 1.4); }
   renderer.shadowMap.needsUpdate = true;
 }
 $('realSair').addEventListener('click', () => saiReal());
@@ -1865,7 +1951,6 @@ const profPronto = fetch('img/prof/indice.json').then((r) => (r.ok ? r.json() : 
 const carregaFoto = new THREE.TextureLoader();
 const cenaFoto = new THREE.Scene();
 const pad2 = (n) => String(n).padStart(2, '0');
-const FOV_BASE = 50;
 
 const vistas = (D.VISTAS || []).map((v) => {
   const e = v.onde ? edificacoes[v.onde] : null;
@@ -2233,7 +2318,8 @@ function seleciona(item) {
     if (modo !== 'interior') setModo('interior', { semVoo: true });
     enquadra(new THREE.Vector3(item.pos.x, 0.5, item.pos.z), 11, 1.05);
   } else if (item.id === 'visao') {
-    voa(new THREE.Vector3(-70, 95, 110), new THREE.Vector3(0, 0, 5), 2);
+    if (telaCompacta()) { const g = poseGeral(); voa(g.pos, g.alvo, 2); }
+    else voa(new THREE.Vector3(-70, 95, 110), new THREE.Vector3(0, 0, 5), 2);
   } else if (item.e) {
     enquadra(item.alvo, item.e.raio * 2.6 + 12, modo === 'interior' ? 1.1 : 0.55);
   } else {
@@ -2351,6 +2437,17 @@ for (const l of lugares) {
   li.appendChild(b); ul.appendChild(li);
 }
 $('modoAereo').addEventListener('click', () => setModo('aereo'));
+$('verTudo').addEventListener('click', () => verTudo());
+$('btnMapa').addEventListener('click', () => {
+  const aberto = document.body.classList.toggle('mapa-aberto');
+  $('btnMapa').setAttribute('aria-expanded', String(aberto));
+});
+document.querySelector('.marca h1').addEventListener('click', () => { if (telaCompacta()) document.querySelector('.marca').classList.toggle('aberta'); });
+{
+  const r = $('reservar'), z = (D.IMOVEL.whatsapp || '').replace(/\D/g, '');
+  if (z) { r.href = `https://wa.me/${z}?text=${encodeURIComponent(`Olá! Vi a ${D.IMOVEL.titulo} em 3D e quero saber a disponibilidade.`)}`; r.textContent = 'Reservar'; }
+  else r.href = D.IMOVEL.airbnb;
+}
 $('modoInterior').addEventListener('click', () => setModo('interior'));
 $('modoCaminhar').addEventListener('click', () => setModo('caminhar'));
 
@@ -2585,8 +2682,8 @@ function quadro() {
   } else if (modo === 'caminhar') atualizaCaminhada(dt);
   else controles.update();
   // ao sair de uma vista, a lente volta aos poucos ao normal
-  if (modo !== 'foto' && Math.abs(camera.fov - FOV_BASE) > 0.01) {
-    camera.fov += (FOV_BASE - camera.fov) * Math.min(1, dt * 4);
+  if (modo !== 'foto' && Math.abs(camera.fov - fovBase()) > 0.01) {
+    camera.fov += (fovBase() - camera.fov) * Math.min(1, dt * 4);
     camera.updateProjectionMatrix();
   }
 
@@ -2625,10 +2722,13 @@ function quadro() {
   requestAnimationFrame(quadro);
 }
 
+let tReenq;
 addEventListener('resize', () => {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(innerWidth, innerHeight);
+  clearTimeout(tReenq);
+  tReenq = setTimeout(() => { if (modo === 'aereo' && !foto && !modoReal && $('painel').hidden && !voo) { const g = poseGeral(); voa(g.pos, g.alvo, 1.2); } }, 250);
 });
 
 dica(MOBILE ? 'Arraste para girar · pinça para aproximar' : 'Arraste para girar · role para aproximar · botão direito move');
