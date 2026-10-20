@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Proposta · Site 3D do seu imóvel</title>
+<meta name="description" content="Seu imóvel num site 3D interativo: o hóspede passeia pela casa inteira antes de reservar.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Proposta · Site 3D do seu imóvel">
+<meta property="og:description" content="O hóspede passeia pela casa inteira antes de reservar. Veja os pacotes.">
+<meta property="og:image" content="https://gustavomarcelloprf.github.io/airbnb-modelo/proposta/capa.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<!-- ============================================================
+     TEMPLATE DE PROPOSTA · navegação por slide.
+     MODO EDIÇÃO (padrão ao abrir o arquivo): todo campo que muda por
+     cliente tem borda tracejada, rótulo e instrução, e é editável
+     direto na tela. MODO APRESENTAÇÃO: só o conteúdo final, pronto
+     para compartilhar tela. O botão some na apresentação; a tecla E
+     alterna os dois modos (fora de um campo de texto).
+     LINK DO CLIENTE: "Copiar link" / "Enviar no WhatsApp" geram um
+     endereço com o preenchimento dentro (?p=...). Quem abre esse link
+     vê só o modo apresentação, sem edição. Para editar a partir de um
+     link enviado, acrescente &editar ao endereço.
+     Nada é salvo fora do endereço: recarregar mantém o que está na
+     barra de endereço; "Limpar" volta ao modelo.
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --papel:#f4f3ef; --papel-hover:#eae8e2; --borda-sutil:#dcd9d1; --borda-controle:#8a877f;
+  --texto-2:#5d6a6c; --tinta:#16242a;
+  --mata:#123c3a; --mata-hover:#1a4a47; --mata-borda:#5f8a85; --mata-texto-2:#a9c2bd; --mata-tinta:#eef4f1;
+  --acento:#d99a2b; --zap:#1f8f4e;
+  --fonte:"Instrument Sans",-apple-system,"Helvetica Neue",sans-serif;
+  --fonte-titulo:"Bricolage Grotesque",-apple-system,"Helvetica Neue",sans-serif;
+  --entra:cubic-bezier(.16,1,.3,1); --pagina:cubic-bezier(.65,.05,.18,1);
+  --margem:clamp(18px,5vw,64px); --largura-max:1080px;
+  color-scheme:light;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--fonte);font-size:17px;line-height:1.5;background:var(--papel);color:var(--tinta);-webkit-font-smoothing:antialiased;overflow:hidden}
+
+/* ---- palco e slides ---- */
+.palco{position:relative;height:100svh;overflow:hidden}
+.slide{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;
+  padding:calc(clamp(64px,10vh,100px) + env(safe-area-inset-top,0px)) 0 calc(120px + env(safe-area-inset-bottom,0px));
+  visibility:hidden;opacity:0;transform:translateX(3%);
+  transition:opacity .55s var(--pagina),transform .6s var(--pagina),visibility 0s linear .6s}
+.slide>.wrap{margin-block:auto}
+.slide.antes{transform:translateX(-3%)}
+.slide.ativo{visibility:visible;opacity:1;transform:none;transition:opacity .55s var(--pagina),transform .6s var(--pagina),visibility 0s}
+.slide [data-item]{opacity:0;transform:translateY(18px);transition:opacity .6s var(--entra),transform .6s var(--entra)}
+.slide.ativo [data-item]{opacity:1;transform:none}
+.slide.ativo .o1{transition-delay:.15s}.slide.ativo .o2{transition-delay:.27s}.slide.ativo .o3{transition-delay:.39s}.slide.ativo .o4{transition-delay:.51s}
+@media (prefers-reduced-motion:reduce){.slide,.slide [data-item]{transition:none}}
+.wrap{max-width:var(--largura-max);margin:0 auto;padding:0 var(--margem);width:100%}
+
+/* ---- cabeçalho de seção ---- */
+.abre{display:flex;align-items:center;gap:14px;margin-bottom:clamp(20px,4vh,36px)}
+.abre .traco{width:36px;height:3px;background:var(--acento);flex:none}
+.eyebrow{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--texto-2)}
+h1,h2,h3{font-family:var(--fonte-titulo);text-wrap:balance}
+h2{font-size:clamp(32px,5vw,52px);line-height:1.1;letter-spacing:-.02em;font-weight:800;max-width:28ch}
+.lede{margin-top:18px;max-width:62ch;color:var(--texto-2)}
+.lede strong{color:var(--tinta);font-weight:600}
+
+/* ---- campo editável por cliente ---- */
+.campo{border:1px dashed var(--borda-controle);border-radius:14px;color:var(--texto-2)}
+.campo-rotulo{display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+.campo-rotulo::before{content:"";width:20px;height:3px;background:var(--acento);flex:none}
+.campo-bloco{padding:18px 20px}
+.campo-instrucao{margin-top:8px;font-size:14px;line-height:1.5}
+.campo-inline{display:inline-block;padding:0 .18em;border-radius:10px;min-width:2ch}
+.campo:focus-within{border-color:var(--texto-2)}
+.campo-texto{margin-top:8px;color:var(--tinta);max-width:62ch;min-height:1.5em;outline:none;cursor:text;white-space:pre-wrap}
+.campo-texto:empty::before,.campo-inline:empty::before{content:attr(data-vazio);color:var(--texto-2);opacity:.6}
+
+/* ---- capa ---- */
+.capa .marca{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:15px;letter-spacing:.02em}
+.capa .marca i{width:28px;height:28px;border-radius:8px;background:var(--mata);display:grid;place-items:center}
+.capa .marca i::after{content:"";width:12px;height:12px;border:2.5px solid var(--acento);border-radius:3px;transform:rotate(45deg) skew(8deg,8deg)}
+.capa h1{margin-top:clamp(24px,5vh,48px);font-size:clamp(38px,7.5vw,72px);line-height:1.04;letter-spacing:-.025em;font-weight:800;max-width:16ch}
+.capa h1 .x{color:var(--texto-2);font-weight:600}
+.capa .foto{width:min(100%,calc(46vh * 1.905));margin-top:clamp(22px,4vh,40px);border-radius:18px;overflow:hidden;max-width:100%;aspect-ratio:1200/630;background:var(--mata)}
+.capa .foto img{width:100%;height:100%;object-fit:cover;display:block}
+.selo{display:inline-flex;align-items:center;gap:12px;margin-top:clamp(18px,3vh,28px);font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--texto-2)}
+.selo::before{content:"";width:36px;height:3px;background:var(--acento)}
+.para{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:14px;font-size:15px}
+.para b{font-weight:500;color:var(--texto-2);margin-right:6px}
+
+/* ---- cartões ---- */
+.cartoes{display:grid;grid-template-columns:1fr;gap:14px;margin-top:clamp(22px,4vh,36px)}
+.cartao{border:1px solid var(--borda-sutil);border-radius:14px;padding:20px}
+.cartao .rotulo{font-size:12.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--texto-2);margin-bottom:8px}
+.cartao h3{font-size:21px;line-height:1.25;letter-spacing:-.01em;font-weight:600;margin-bottom:6px}
+.cartao p{color:var(--texto-2);font-size:15px}
+.demo{margin-top:18px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--fonte);text-decoration:none;border-radius:12px;padding:12px 18px;border:0;cursor:pointer;background:var(--mata);color:var(--mata-tinta)}
+.btn.zap{background:var(--zap);color:#fff}
+.demo small{color:var(--texto-2);font-size:14px}
+
+/* ---- pacotes ---- */
+.planos{display:grid;grid-template-columns:1fr;gap:14px;margin-top:clamp(22px,4vh,36px)}
+.plano{border:1px solid var(--borda-sutil);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;position:relative;background:var(--papel)}
+.plano.rec{border:2px solid var(--acento)}
+.plano header{padding:16px 20px;background:var(--mata);color:var(--mata-tinta);display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.plano header .faixa{font-size:12.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--mata-texto-2)}
+.plano header h3{font-size:22px;font-weight:600;margin-top:2px}
+.plano .tag{display:none;font-size:12px;font-weight:600;background:var(--acento);color:#2a1d05;border-radius:999px;padding:3px 10px;white-space:nowrap}
+.plano.rec .tag{display:inline-block}
+.plano .corpo{padding:16px 20px 20px;display:grid;gap:12px;flex:1;align-content:start}
+.plano .campo-bloco{padding:12px 14px}
+.plano .campo-instrucao{font-size:13px;margin-top:6px}
+.valor{font-family:var(--fonte-titulo);font-size:clamp(26px,3.4vw,32px);line-height:1.15;font-weight:800;letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+.mensal{font-size:15px;color:var(--texto-2);margin-top:2px}
+.escopo{font-size:15px}
+.escopo-lista{display:none;margin-top:6px;padding-left:18px;font-size:15px;color:var(--tinta);gap:5px}
+.prazo-txt{font-size:14px}
+.recomendar{font:500 13px var(--fonte);background:none;border:1px dashed var(--borda-controle);color:var(--texto-2);border-radius:10px;padding:7px 10px;cursor:pointer;justify-self:start}
+.plano.rec .recomendar{border-style:solid;border-color:var(--acento);color:var(--tinta)}
+
+/* ---- como funciona ---- */
+.duas{display:grid;grid-template-columns:1fr;gap:clamp(22px,4vw,48px);margin-top:clamp(22px,4vh,36px)}
+.passos{list-style:none;display:grid;gap:12px;counter-reset:p}
+.passos li{display:grid;grid-template-columns:34px 1fr;gap:12px;font-size:15.5px}
+.passos li::before{counter-increment:p;content:counter(p);width:30px;height:30px;border-radius:50%;background:var(--mata);color:var(--mata-tinta);display:grid;place-items:center;font-weight:600;font-size:14px}
+.cond{list-style:none;display:grid;gap:10px;font-size:15px;color:var(--texto-2)}
+.cond b{color:var(--tinta);font-weight:600}
+
+/* ---- fechamento ---- */
+.fecho{background:var(--mata);color:var(--mata-tinta)}
+.fecho .eyebrow,.fecho .lede{color:var(--mata-texto-2)}
+.fecho .lede strong{color:var(--mata-tinta)}
+.fecho .campo{border-color:var(--mata-borda);color:var(--mata-texto-2)}
+.fecho .campo:focus-within{border-color:var(--mata-texto-2)}
+.fecho .campo-texto,.fecho .campo-inline{color:var(--mata-tinta)}
+.fecho .campo-texto:empty::before,.fecho .campo-inline:empty::before{color:var(--mata-texto-2);opacity:1}
+.contato{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:clamp(24px,4vh,40px);font-size:16px;align-items:center}
+.contato .rot{display:block;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mata-texto-2);margin-bottom:2px}
+.fecho .btn.zap{margin-top:clamp(22px,4vh,32px)}
+
+/* ---- navegação ---- */
+.nav{position:fixed;right:var(--margem);bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:10;display:flex;align-items:center;gap:12px}
+.nav button,.modo,.ferr button{font:500 15px var(--fonte);color:var(--tinta);background:var(--papel);border:1px solid var(--borda-controle);border-radius:14px;padding:10px 18px;cursor:pointer;transition:background .25s var(--entra)}
+.nav button:hover,.modo:hover,.ferr button:hover{background:var(--papel-hover)}
+.nav button:disabled{opacity:.35;cursor:default}
+.nav .contador{font-size:15px;font-weight:500;font-variant-numeric:tabular-nums;color:var(--texto-2);min-width:44px;text-align:center;background:var(--papel);border-radius:10px;padding:4px 6px}
+.dica{position:fixed;left:var(--margem);bottom:calc(30px + env(safe-area-inset-bottom,0px));z-index:10;font-size:13px;color:var(--texto-2);letter-spacing:.04em}
+.modo{position:fixed;right:var(--margem);top:calc(18px + env(safe-area-inset-top,0px));z-index:11;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:10px 16px}
+.ferr{position:fixed;left:var(--margem);top:calc(18px + env(safe-area-inset-top,0px));z-index:11;display:flex;gap:8px;flex-wrap:wrap;max-width:calc(100% - 2*var(--margem) - 200px)}
+.ferr button{font-size:13.5px;padding:9px 14px}
+.ferr .zap{background:var(--zap);color:#fff;border-color:var(--zap)}
+.toast{position:fixed;left:50%;top:calc(70px + env(safe-area-inset-top,0px));transform:translateX(-50%);background:var(--tinta);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20;max-width:calc(100% - 32px)}
+.toast.on{opacity:1}
+@media (max-width:640px){
+  .ferr{max-width:none;right:var(--margem);top:calc(64px + env(safe-area-inset-top,0px))}
+  body:not(.apresentando) .slide{padding-top:calc(120px + env(safe-area-inset-top,0px))}
+  .dica{display:none}
+}
+
+/* ---- desktop ---- */
+@media (min-width:760px){
+  .cartoes.quatro{grid-template-columns:repeat(2,1fr)}
+  .cartoes.tres{grid-template-columns:repeat(3,1fr)}
+  .planos{grid-template-columns:repeat(3,1fr);align-items:stretch}
+  .duas{grid-template-columns:1.1fr 1fr}
+}
+@media (min-width:1000px){.cartoes.quatro{grid-template-columns:repeat(4,1fr)}}
+
+/* ---- modo apresentação: some toda a marcação de template ---- */
+body.apresentando .modo,body.apresentando .ferr,body.apresentando .recomendar{display:none}
+body.apresentando .campo{border:none}
+body.apresentando .campo-bloco{padding:0}
+body.apresentando .campo-inline{padding:0;color:inherit}
+body.apresentando .campo-inline:empty{display:none}
+body.apresentando .campo-texto{cursor:default;margin-top:4px}
+body.apresentando .campo-texto:empty,body.apresentando [data-opcional]:has(.campo-texto:empty){display:none}
+body.apresentando .campo-instrucao,body.apresentando .campo-status{display:none}
+body.apresentando .campo-rotulo::before{display:none}
+body.apresentando .escopo{display:none}
+body.apresentando .escopo-lista{display:grid}
+body.apresentando .plano .linha-rot{display:none}
+body.cliente .modo{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="palco">
+
+<!-- 1 · capa -->
+<section class="slide capa" aria-label="Capa">
+  <div class="wrap">
+    <div class="o1" data-item><span class="marca"><i></i>Sites 3D para imóveis de temporada</span></div>
+    <h1 class="o2" data-item><span class="campo campo-inline" data-k="imovel" contenteditable="true" spellcheck="false" data-vazio="Nome do imóvel"></span> <span class="x">em 3D</span></h1>
+    <div class="foto o3" data-item><img src="{{CAPA}}" alt="Exemplo de site 3D: propriedade vista de cima, com as construções marcadas"></div>
+    <span class="selo o4" data-item>Proposta comercial · preparada para <span class="campo campo-inline" data-k="cliente" contenteditable="true" spellcheck="false" data-vazio="nome do cliente"></span></span>
+  </div>
+</section>
+
+<!-- 2 · o imóvel -->
+<section class="slide" aria-label="O imóvel">
+  <div class="wrap">
+    <div class="abre" data-item><span class="traco"></span><span class="eyebrow">02 · O imóvel</span></div>
+    <h2 class="o1" data-item>O que vimos no seu anúncio.</h2>
+    <p class="lede o2" data-item>Um imóvel desse nível merece ser visto por inteiro antes da reserva, e não só por fotos soltas.</p>
+    <div class="campo campo-bloco o3" data-item style="margin-top:clamp(22px,4vh,36px)">
+      <div class="campo-rotulo campo-status">Preencher antes de enviar · o imóvel do cliente</div>
+      <p class="campo-instrucao">Escreva em 2 ou 3 frases o que chama atenção no imóvel (suítes, vista, piscina, localização) e onde ele está anunciado. Específico deste cliente, nada genérico.</p>
+      <div class="campo-texto" data-k="contexto" contenteditable="true" spellcheck="false" data-vazio="Ex.: Casa de 5 suítes pé na areia em Juquehy, com piscina e área gourmet, anunciada no site de vocês com mais de 40 fotos."></div>
+    </div>
+    <div class="para o4" data-item><span><b>Local</b><span class="campo campo-inline" data-k="local" contenteditable="true" spellcheck="false" data-vazio="bairro, cidade"></span></span><span><b>Data</b><span class="campo campo-inline" data-k="data" contenteditable="true" spellcheck="false" data-vazio="dd/mm/aaaa"></span></span></div>
+  </div>
+</section>
+
+<!-- 3 · o que você recebe -->
+<section class="slide" aria-label="O que você recebe">
+  <div class="wrap">
+    <div class="abre" data-item><span class="traco"></span><span class="eyebrow">03 · O que você recebe</span></div>
+    <h2 class="o1" data-item>Um site para o hóspede passear antes de reservar.</h2>
+    <p class="lede o2" data-item>Um site próprio do imóvel, que abre no celular direto pelo link do <strong>WhatsApp ou do Instagram</strong>.</p>
+    <div class="cartoes quatro o3" data-item>
+      <div class="cartao"><h3>Mapa 3D do imóvel</h3><p>A propriedade inteira em maquete, com as áreas marcadas: piscina, suítes, área gourmet, jardim.</p></div>
+      <div class="cartao"><h3>Vistas fotográficas</h3><p>Cada foto vira uma janela com profundidade; a câmera voa pelo mapa até onde a foto foi tirada.</p></div>
+      <div class="cartao"><h3>Ambientes em 3D</h3><p>Ambientes refeitos com luz e materiais fiéis às fotos, para andar por dentro.</p></div>
+      <div class="cartao"><h3>Botão de reserva</h3><p>WhatsApp, preços e capacidade sempre à vista, para fechar direto com você.</p></div>
+    </div>
+    <div class="demo o4" data-item>
+      <a class="btn" href="https://gustavomarcelloprf.github.io/airbnb-modelo/clientes/chacara-bofete/site/" target="_blank" rel="noopener">Ver um exemplo pronto ↗</a>
+      <small>Chácara em Bofete/SP · abre no celular e no computador</small>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · por que funciona -->
+<section class="slide" aria-label="Por que funciona">
+  <div class="wrap">
+    <div class="abre" data-item><span class="traco"></span><span class="eyebrow">04 · Por que funciona</span></div>
+    <h2 class="o1" data-item>Quem conhece o lugar antes, reserva com mais segurança.</h2>
+    <div class="cartoes tres o2" data-item>
+      <div class="cartao"><div class="rotulo">01</div><h3>Menos dúvida, mais reserva</h3><p>O hóspede vê a distância da suíte à piscina, o tamanho da área gourmet, a vista. As perguntas de sempre chegam respondidas.</p></div>
+      <div class="cartao"><div class="rotulo">02</div><h3>Reserva direta, sem comissão</h3><p>O link vai no Instagram, no Google e no WhatsApp. Cada reserva fechada por ele é uma reserva sem taxa de plataforma.</p></div>
+      <div class="cartao"><div class="rotulo">03</div><h3>Feito com as fotos que você já tem</h3><p>Sem visita técnica e sem equipamento: o modelo é montado a partir das fotos e da planta do anúncio.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · pacotes -->
+<section class="slide" aria-label="Pacotes">
+  <div class="wrap">
+    <div class="abre" data-item><span class="traco"></span><span class="eyebrow">05 · Pacotes</span></div>
+    <h2 class="o1" data-item>Três formatos, do link de entrada ao imóvel inteiro em 3D.</h2>
+    <p class="lede o2" data-item>Todos incluem hospedagem, ajustes e suporte enquanto a mensalidade estiver ativa.</p>
+    <div class="planos o3" data-item>
+      <div class="plano" data-plano="1">
+        <header><div><div class="faixa">Pacote 1</div><h3>Simples</h3></div><span class="tag">Recomendado</span></header>
+        <div class="corpo">
+          <div class="campo campo-bloco">
+            <div class="campo-rotulo linha-rot">Investimento</div>
+            <div class="campo-texto valor" data-k="v1" contenteditable="true" spellcheck="false"></div>
+            <div class="campo-texto mensal" data-k="m1" contenteditable="true" spellcheck="false"></div>
+          </div>
+          <div class="campo campo-bloco">
+            <div class="campo-rotulo linha-rot">Escopo</div><p class="campo-instrucao">Um item por linha.</p>
+            <div class="campo-texto escopo" data-k="e1" contenteditable="true" spellcheck="false"></div><ul class="escopo-lista"></ul>
+          </div>
+          <div class="campo campo-bloco"><div class="campo-texto prazo-txt" data-k="d1" contenteditable="true" spellcheck="false"></div></div>
+          <button class="recomendar" type="button">Marcar como recomendado</button>
+        </div>
+      </div>
+      <div class="plano" data-plano="2">
+        <header><div><div class="faixa">Pacote 2</div><h3>Intermediário</h3></div><span class="tag">Recomendado</span></header>
+        <div class="corpo">
+          <div class="campo campo-bloco">
+            <div class="campo-rotulo linha-rot">Investimento</div>
+            <div class="campo-texto valor" data-k="v2" contenteditable="true" spellcheck="false"></div>
+            <div class="campo-texto mensal" data-k="m2" contenteditable="true" spellcheck="false"></div>
+          </div>
+          <div class="campo campo-bloco">
+            <div class="campo-rotulo linha-rot">Escopo</div><p class="campo-instrucao">Um item por linha.</p>
+            <div class="campo-texto escopo" data-k="e2" contenteditable="true" spellcheck="false"></div><ul class="escopo-lista"></ul>
+          </div>
+          <div class="campo campo-bloco"><div class="campo-texto prazo-txt" data-k="d2" contenteditable="true" spellcheck="false"></div></div>
+          <button class="recomendar" type="button">Marcar como recomendado</button>
+        </div>
+      </div>
+      <div class="plano" data-plano="3">
+        <header><div><div class="faixa">Pacote 3</div><h3>Avançado</h3></div><span class="tag">Recomendado</span></header>
+        <div class="corpo">
+          <div class="campo campo-bloco">
+            <div class="campo-rotulo linha-rot">Investimento</div>
+            <div class="campo-texto valor" data-k="v3" contenteditable="true" spellcheck="false"></div>
+            <div class="campo-texto mensal" data-k="m3" contenteditable="true" spellcheck="false"></div>
+          </div>
+          <div class="campo campo-bloco">
+            <div class="campo-rotulo linha-rot">Escopo</div><p class="campo-instrucao">Um item por linha.</p>
+            <div class="campo-texto escopo" data-k="e3" contenteditable="true" spellcheck="false"></div><ul class="escopo-lista"></ul>
+          </div>
+          <div class="campo campo-bloco"><div class="campo-texto prazo-txt" data-k="d3" contenteditable="true" spellcheck="false"></div></div>
+          <button class="recomendar" type="button">Marcar como recomendado</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · como funciona -->
+<section class="slide" aria-label="Como funciona">
+  <div class="wrap">
+    <div class="abre" data-item><span class="traco"></span><span class="eyebrow">06 · Como funciona</span></div>
+    <h2 class="o1" data-item>Do sim ao site no ar.</h2>
+    <div class="duas o2" data-item>
+      <ol class="passos">
+        <li><span><b>Aprovação.</b> Você escolhe o pacote e paga a entrada de 50%.</span></li>
+        <li><span><b>Material.</b> Você envia as fotos em alta (de preferência 30 ou mais, cobrindo todos os ambientes), a planta ou um croqui e o link do anúncio.</span></li>
+        <li><span><b>Produção.</b> Montamos a maquete, as vistas e os ambientes em 3D.</span></li>
+        <li><span><b>Revisão.</b> Você recebe o link de prévia e pede até 2 rodadas de ajustes.</span></li>
+        <li><span><b>Publicação.</b> O site vai ao ar e você paga os 50% restantes.</span></li>
+      </ol>
+      <ul class="cond">
+        <li><b>Pagamento:</b> 50% na aprovação e 50% na publicação, por Pix ou boleto; implantação em até 3x no cartão.</li>
+        <li><b>Mensalidade:</b> começa no mês seguinte à publicação. Sem fidelidade.</li>
+        <li><b>Plano anual:</b> 12 meses à vista, 2 meses grátis.</li>
+        <li><b>Gestoras e imobiliárias:</b> de 20% a 40% de desconto conforme o número de imóveis.</li>
+        <li><b>Não incluso:</b> sessão de fotos, registro do domínio e anúncios pagos.</li>
+        <li><b>Validade:</b> <span class="campo campo-inline" data-k="validade" contenteditable="true" spellcheck="false" data-vazio="15"></span> dias a partir da data da proposta.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · próximos passos -->
+<section class="slide fecho" aria-label="Próximos passos">
+  <div class="wrap">
+    <div class="abre" data-item><span class="traco"></span><span class="eyebrow">07 · Próximo passo</span></div>
+    <h2 class="o1" data-item>Vamos colocar seu imóvel em 3D?</h2>
+    <p class="lede o2" data-item><strong>Responda com o pacote escolhido</strong> e enviamos o link de pagamento da entrada e a lista de fotos que precisamos.</p>
+    <div class="campo campo-bloco o3" data-item data-opcional style="margin-top:clamp(22px,4vh,36px)">
+      <div class="campo-rotulo campo-status">Opcional · condição ou próximo passo combinado</div>
+      <p class="campo-instrucao">Ex.: condição especial de lançamento, data combinada para começar, desconto por volume. Vazio, não aparece para o cliente.</p>
+      <div class="campo-texto" data-k="passo" contenteditable="true" spellcheck="false" data-vazio="Clique e escreva (opcional)."></div>
+    </div>
+    <div class="contato o4" data-item>
+      <span><span class="rot">Contato</span><span class="campo campo-inline" data-k="vendedor" contenteditable="true" spellcheck="false" data-vazio="seu nome"></span></span>
+      <span><span class="rot">WhatsApp</span><span class="campo campo-inline" data-k="fone" contenteditable="true" spellcheck="false" data-vazio="(DDD) 9XXXX-XXXX"></span></span>
+      <span><span class="rot">E-mail</span><span class="campo campo-inline" data-k="email" contenteditable="true" spellcheck="false" data-vazio="seu@email.com"></span></span>
+    </div>
+    <a class="btn zap o4" data-item id="fecharZap" href="#" target="_blank" rel="noopener" hidden>Quero fechar pelo WhatsApp</a>
+  </div>
+</section>
+
+</div>
+
+<div class="ferr" id="ferr">
+  <button type="button" id="bCopiar">Copiar link do cliente</button>
+  <button type="button" class="zap" id="bZap">Enviar no WhatsApp</button>
+  <button type="button" id="bLimpar">Limpar</button>
+</div>
+<button type="button" class="modo" id="modo" aria-pressed="false">Modo apresentação</button>
+
+<nav class="nav" aria-label="Navegação de slides">
+  <button type="button" id="anterior" aria-label="Slide anterior">←</button>
+  <span class="contador" id="contador">1 / 7</span>
+  <button type="button" id="proximo" aria-label="Próximo slide">→</button>
+</nav>
+<span class="dica" id="dica">setas do teclado ou clique avançam</span>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  const PADRAO = {
+    imovel: '', cliente: '', contexto: '', local: '', data: new Date().toLocaleDateString('pt-BR'),
+    v1: 'R$ 1.200', m1: '+ R$ 49/mês', d1: 'Entrega em até 7 dias úteis',
+    e1: 'Vistas fotográficas de até 30 fotos\nMapa 3D simplificado do terreno, com as áreas marcadas\nBotão de WhatsApp, capacidade e comodidades\nEndereço gratuito (ex.: seuimovel.pages.dev)',
+    v2: 'R$ 3.500', m2: '+ R$ 89/mês', d2: 'Entrega em até 15 dias úteis',
+    e2: 'Tudo do Simples, sem limite de fotos\nMaquete 3D fiel de todas as construções\n1 ambiente principal recriado em 3D com luz realista\nPreços por temporada e formulário para eventos\nDomínio próprio .com.br configurado\nRelatório mensal de visitas e cliques no WhatsApp',
+    v3: 'R$ 6.900', m3: '+ R$ 149/mês', d3: 'Entrega em até 30 dias úteis',
+    e3: 'Tudo do Intermediário\nTodos os ambientes internos recriados em 3D\nPasseio guiado automático para enviar a hóspedes\nSite em português e inglês\nCalendário de disponibilidade integrado\nVídeo do passeio 3D para Reels e Stories\n2 atualizações por ano',
+    validade: '15', passo: '', vendedor: 'Guilherme', fone: '', email: '', rec: ''
+  };
+  const qs = new URLSearchParams(location.search);
+  const ehCliente = qs.has('p') && !qs.has('editar');
+  let dados = {};
+
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const contador = document.getElementById('contador');
+  const btAnterior = document.getElementById('anterior');
+  const btProximo = document.getElementById('proximo');
+  const dica = document.getElementById('dica');
+  const campos = () => Array.from(document.querySelectorAll('[data-k]'));
+  let atual = 0;
+
+  function ir(n) {
+    atual = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, i) => { s.classList.toggle('ativo', i === atual); s.classList.toggle('antes', i < atual); });
+    contador.textContent = (atual + 1) + ' / ' + slides.length;
+    btAnterior.disabled = atual === 0;
+    btProximo.disabled = atual === slides.length - 1;
+    if (atual > 0) dica.style.display = 'none';
+  }
+  btAnterior.addEventListener('click', e => { e.stopPropagation(); ir(atual - 1); });
+  btProximo.addEventListener('click', e => { e.stopPropagation(); ir(atual + 1); });
+
+  document.addEventListener('keydown', e => {
+    if (e.target.isContentEditable) return;
+    if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); ir(atual + 1); }
+    if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); ir(atual - 1); }
+    if (e.key === 'Home') ir(0);
+    if (e.key === 'End') ir(slides.length - 1);
+    if ((e.key === 'e' || e.key === 'E') && !ehCliente) aplicarModo(!document.body.classList.contains('apresentando'));
+  });
+
+  /* clique em área vazia avança (desktop); no celular, deslizar o dedo */
+  const toque = matchMedia('(pointer: coarse)').matches;
+  document.querySelector('.palco').addEventListener('click', e => {
+    if (toque) return;
+    if (e.target.closest('.nav, a, button, .ferr')) return;
+    if (!document.body.classList.contains('apresentando') && e.target.closest('.campo')) return;
+    ir(atual + 1);
+  });
+  let x0 = null, y0 = null;
+  document.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5 && !e.target.isContentEditable) ir(atual + (dx < 0 ? 1 : -1));
+    x0 = null;
+  }, { passive: true });
+
+  /* preenchimento */
+  const valor = k => (k in dados ? dados[k] : PADRAO[k]) ?? '';
+  function listas() {
+    document.querySelectorAll('.escopo').forEach(el => {
+      const ul = el.nextElementSibling; ul.innerHTML = '';
+      valor(el.dataset.k).split('\n').map(s => s.trim()).filter(Boolean).forEach(t => { const li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+    });
+  }
+  function aplica() {
+    campos().forEach(el => { if (document.activeElement !== el) el.innerText = valor(el.dataset.k); });
+    document.querySelectorAll('.plano').forEach(p => p.classList.toggle('rec', p.dataset.plano === valor('rec')));
+    document.querySelectorAll('.recomendar').forEach(b => b.textContent = b.closest('.plano').classList.contains('rec') ? 'Recomendado ✓' : 'Marcar como recomendado');
+    listas();
+    const fone = valor('fone').replace(/\D/g, ''), z = document.getElementById('fecharZap');
+    if (fone.length >= 10) {
+      const n = fone.startsWith('55') ? fone : '55' + fone;
+      const txt = `Olá, ${valor('vendedor') || ''}! Vi a proposta do site 3D${valor('imovel') ? ' para ' + valor('imovel') : ''} e quero conversar sobre o pacote `;
+      z.href = `https://wa.me/${n}?text=${encodeURIComponent(txt)}`; z.hidden = false;
+    } else z.hidden = true;
+  }
+  function coleta() {
+    const novo = {};
+    campos().forEach(el => { const k = el.dataset.k, t = el.innerText.replace(/\n+$/, '').trim(); if (t !== (PADRAO[k] ?? '')) novo[k] = t; });
+    if (dados.rec) novo.rec = dados.rec;
+    novo.data = valor('data') && campos().find(el => el.dataset.k === 'data').innerText.trim() || PADRAO.data;
+    dados = novo;
+  }
+
+  /* link do cliente: preenchimento comprimido dentro do endereço */
+  const b64 = {
+    enc: u8 => { let s = ''; u8.forEach(c => s += String.fromCharCode(c)); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); },
+    dec: s => Uint8Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0))
+  };
+  async function codifica(o) {
+    const bytes = new TextEncoder().encode(JSON.stringify(o));
+    if ('CompressionStream' in window) {
+      const s = new Blob([bytes]).stream().pipeThrough(new CompressionStream('deflate-raw'));
+      return 'z' + b64.enc(new Uint8Array(await new Response(s).arrayBuffer()));
+    }
+    return 'j' + b64.enc(bytes);
+  }
+  async function decodifica(t) {
+    const bytes = b64.dec(t.slice(1));
+    if (t[0] === 'z') return JSON.parse(await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).text());
+    return JSON.parse(new TextDecoder().decode(bytes));
+  }
+  const BASE_PUBLICA = 'https://gustavomarcelloprf.github.io/airbnb-modelo/proposta/';
+  async function linkCliente() {
+    const base = location.protocol.startsWith('http') ? location.origin + location.pathname : BASE_PUBLICA;
+    return Object.keys(dados).length ? `${base}?p=${await codifica(dados)}` : base;
+  }
+  let tUrl;
+  function guardaNoEndereco() {
+    clearTimeout(tUrl);
+    tUrl = setTimeout(async () => {
+      if (!location.protocol.startsWith('http')) return;
+      const p = Object.keys(dados).length ? '?editar&p=' + await codifica(dados) : location.pathname;
+      history.replaceState(null, '', p);
+    }, 300);
+  }
+  function aviso(t) { const el = document.getElementById('toast'); el.textContent = t; el.classList.add('on'); setTimeout(() => el.classList.remove('on'), 2400); }
+
+  /* modo apresentação: estado binário; no link do cliente, fixo */
+  const btModo = document.getElementById('modo');
+  function aplicarModo(apresentando) {
+    if (!apresentando) coleta();
+    document.body.classList.toggle('apresentando', apresentando);
+    campos().forEach(el => el.contentEditable = apresentando ? 'false' : 'true');
+    btModo.textContent = apresentando ? 'Modo edição' : 'Modo apresentação';
+    btModo.setAttribute('aria-pressed', String(apresentando));
+    listas();
+  }
+  btModo.addEventListener('click', () => aplicarModo(!document.body.classList.contains('apresentando')));
+
+  document.addEventListener('paste', e => {
+    if (!e.target.isContentEditable) return;
+    e.preventDefault();
+    document.execCommand('insertText', false, e.clipboardData.getData('text/plain'));
+  });
+  document.addEventListener('input', e => {
+    if (!e.target.isContentEditable) return;
+    if (e.target.innerHTML === '<br>') e.target.innerHTML = '';
+    coleta(); guardaNoEndereco();
+  });
+  document.addEventListener('focusout', e => { if (e.target.dataset && e.target.dataset.k) aplica(); });
+  document.querySelectorAll('.recomendar').forEach(b => b.addEventListener('click', e => {
+    e.stopPropagation(); coleta();
+    const n = b.closest('.plano').dataset.plano;
+    if (dados.rec === n) delete dados.rec; else dados.rec = n;
+    aplica(); guardaNoEndereco();
+  }));
+
+  document.getElementById('bCopiar').addEventListener('click', async e => {
+    e.stopPropagation(); coleta();
+    const u = await linkCliente();
+    try { await navigator.clipboard.writeText(u); aviso('Link do cliente copiado'); }
+    catch (err) { window.prompt('Copie o link do cliente:', u); }
+  });
+  document.getElementById('bZap').addEventListener('click', async e => {
+    e.stopPropagation(); coleta();
+    const u = await linkCliente();
+    const nome = (valor('cliente') || '').split(' ')[0];
+    const txt = `${nome ? 'Oi, ' + nome + '! ' : 'Oi! '}Segue a proposta do site 3D${valor('imovel') ? ' para ' + valor('imovel') : ''}: ${u}`;
+    window.open('https://wa.me/?text=' + encodeURIComponent(txt), '_blank', 'noopener');
+  });
+  document.getElementById('bLimpar').addEventListener('click', e => {
+    e.stopPropagation();
+    if (!confirm('Limpar a proposta e voltar ao modelo?')) return;
+    dados = {}; aplica();
+    if (location.protocol.startsWith('http')) history.replaceState(null, '', location.pathname);
+    aviso('Proposta limpa');
+  });
+
+  (async () => {
+    const p = qs.get('p');
+    if (p) { try { dados = await decodifica(p); } catch (err) { dados = {}; } }
+    aplica();
+    if (ehCliente) { document.body.classList.add('cliente'); aplicarModo(true); dica.textContent = 'deslize ou use as setas'; }
+    else aplicarModo(false);
+    ir((parseInt(location.hash.slice(1), 10) || 1) - 1);
+  })();
+})();
+</script>
+</body>
+</html>
