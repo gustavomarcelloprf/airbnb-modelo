@@ -23,6 +23,7 @@
      Nada é salvo fora do endereço: recarregar mantém o que está na
      barra de endereço; "Limpar" volta ao modelo.
      ============================================================ -->
+<script>document.documentElement.classList.add('js')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
 <style>
@@ -44,6 +45,12 @@ html,body{height:100%}
 body{font-family:var(--fonte);font-size:17px;line-height:1.5;background:var(--papel);color:var(--tinta);-webkit-font-smoothing:antialiased;overflow:hidden}
 
 /* ---- palco e slides ---- */
+/* sem JavaScript (pré-visualização do WhatsApp, Arquivos, e-mail): mostra os slides em sequência */
+html:not(.js) body{overflow:auto}
+html:not(.js) .palco{height:auto;overflow:visible}
+html:not(.js) .slide{position:relative;inset:auto;visibility:visible;opacity:1;transform:none;min-height:0;padding-block:64px;overflow:visible}
+html:not(.js) .slide [data-item]{opacity:1;transform:none}
+html:not(.js) .nav,html:not(.js) .ferr,html:not(.js) .modo,html:not(.js) .recomendar,html:not(.js) .campo-instrucao{display:none}
 .palco{position:relative;height:100svh;overflow:hidden}
 .slide{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;
   padding:calc(clamp(64px,10vh,100px) + env(safe-area-inset-top,0px)) 0 calc(120px + env(safe-area-inset-bottom,0px));
