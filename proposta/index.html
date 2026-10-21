@@ -8,7 +8,7 @@
 <meta name="description" content="Seu imóvel num site 3D interativo: o hóspede passeia pela casa inteira antes de reservar.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Proposta Planor · Site 3D do seu imóvel">
-<meta property="og:description" content="O hóspede passeia pela casa inteira antes de reservar. Veja os pacotes.">
+<meta property="og:description" content="O hóspede passeia pela casa inteira antes de reservar. Veja os planos.">
 <!-- ============================================================
      TEMPLATE DE PROPOSTA · navegação por slide.
      MODO EDIÇÃO (padrão ao abrir o arquivo): todo campo que muda por
@@ -130,7 +130,10 @@ h2{font-size:clamp(32px,5vw,54px);line-height:1.04;letter-spacing:-.04em;font-we
 .valor{font-family:var(--fonte-titulo);font-size:clamp(26px,3.4vw,34px);line-height:1.1;font-weight:500;letter-spacing:-.035em;font-variant-numeric:tabular-nums}
 .mensal{font-size:15px;color:var(--texto-2);margin-top:2px}
 .escopo{font-size:15px}
-.escopo-lista{display:none;margin-top:6px;padding-left:18px;font-size:15px;color:var(--tinta);gap:5px}
+.fixo{display:grid;gap:8px;padding:2px 4px}
+.fixo-rot{font-size:12.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--texto-2)}
+.escopo-lista{display:grid;margin:0;padding-left:18px;font-size:15px;color:var(--tinta);gap:5px}
+.fixo .prazo-txt{color:var(--texto-2);margin:4px 0 0}
 .prazo-txt{font-size:14px}
 .recomendar{font:500 13px var(--fonte);background:none;border:1px dashed var(--borda-controle);color:var(--texto-2);border-radius:10px;padding:7px 10px;cursor:pointer;justify-self:start}
 .plano.rec .recomendar{border-style:solid;border-color:var(--acento);color:var(--tinta)}
@@ -193,8 +196,6 @@ body.apresentando .campo-texto{cursor:default;margin-top:4px}
 body.apresentando .campo-texto:empty,body.apresentando [data-opcional]:has(.campo-texto:empty){display:none}
 body.apresentando .campo-instrucao,body.apresentando .campo-status{display:none}
 body.apresentando .campo-rotulo::before{display:none}
-body.apresentando .escopo{display:none}
-body.apresentando .escopo-lista{display:grid}
 body.apresentando .plano .linha-rot{display:none}
 body.cliente .modo{display:none!important}
 </style>
@@ -262,57 +263,45 @@ body.cliente .modo{display:none!important}
 </section>
 
 <!-- 5 · pacotes -->
-<section class="slide" aria-label="Pacotes">
+<section class="slide" aria-label="Planos">
   <div class="wrap">
-    <div class="abre" data-item><span class="traco"></span><span class="eyebrow">05 · Pacotes</span></div>
-    <h2 class="o1" data-item>Três formatos, do link de entrada ao imóvel inteiro em 3D.</h2>
+    <div class="abre" data-item><span class="traco"></span><span class="eyebrow">05 · Planos</span></div>
+    <h2 class="o1" data-item>Três planos, do mapa da casa ao passeio por dentro.</h2>
     <p class="lede o2" data-item>Todos incluem hospedagem, ajustes e suporte enquanto a mensalidade estiver ativa.</p>
     <div class="planos o3" data-item>
       <div class="plano" data-plano="1">
-        <header><div><div class="faixa">Pacote 1</div><h3>Simples</h3></div><span class="tag">Recomendado</span></header>
+        <header><div><div class="faixa">Plano 1</div><h3>Essencial</h3></div><span class="tag">Recomendado</span></header>
         <div class="corpo">
           <div class="campo campo-bloco">
             <div class="campo-rotulo linha-rot">Investimento</div>
             <div class="campo-texto valor" data-k="v1" contenteditable="true" spellcheck="false"></div>
             <div class="campo-texto mensal" data-k="m1" contenteditable="true" spellcheck="false"></div>
           </div>
-          <div class="campo campo-bloco">
-            <div class="campo-rotulo linha-rot">Escopo</div><p class="campo-instrucao">Um item por linha.</p>
-            <div class="campo-texto escopo" data-k="e1" contenteditable="true" spellcheck="false"></div><ul class="escopo-lista"></ul>
-          </div>
-          <div class="campo campo-bloco"><div class="campo-texto prazo-txt" data-k="d1" contenteditable="true" spellcheck="false"></div></div>
+          <div class="fixo"><div class="fixo-rot">O que inclui</div><ul class="escopo-lista"><li>Até 30 fotos posicionadas no mapa do imóvel</li><li>Mapa 3D do terreno com as áreas marcadas</li><li>Botão de WhatsApp, capacidade e comodidades</li><li>Endereço gratuito (ex.: seuimovel.pages.dev)</li></ul><p class="prazo-txt">Entrega em até 7 dias úteis</p></div>
           <button class="recomendar" type="button">Marcar como recomendado</button>
         </div>
       </div>
       <div class="plano" data-plano="2">
-        <header><div><div class="faixa">Pacote 2</div><h3>Intermediário</h3></div><span class="tag">Recomendado</span></header>
+        <header><div><div class="faixa">Plano 2</div><h3>Completo</h3></div><span class="tag">Recomendado</span></header>
         <div class="corpo">
           <div class="campo campo-bloco">
             <div class="campo-rotulo linha-rot">Investimento</div>
             <div class="campo-texto valor" data-k="v2" contenteditable="true" spellcheck="false"></div>
             <div class="campo-texto mensal" data-k="m2" contenteditable="true" spellcheck="false"></div>
           </div>
-          <div class="campo campo-bloco">
-            <div class="campo-rotulo linha-rot">Escopo</div><p class="campo-instrucao">Um item por linha.</p>
-            <div class="campo-texto escopo" data-k="e2" contenteditable="true" spellcheck="false"></div><ul class="escopo-lista"></ul>
-          </div>
-          <div class="campo campo-bloco"><div class="campo-texto prazo-txt" data-k="d2" contenteditable="true" spellcheck="false"></div></div>
+          <div class="fixo"><div class="fixo-rot">O que inclui</div><ul class="escopo-lista"><li>Tudo do Essencial, sem limite de fotos</li><li>Maquete 3D fiel de todas as construções</li><li>1 ambiente principal recriado por dentro, com luz realista</li><li>Preços por temporada e formulário para eventos</li><li>Domínio próprio .com.br configurado</li><li>Relatório mensal de visitas e cliques no WhatsApp</li></ul><p class="prazo-txt">Entrega em até 15 dias úteis</p></div>
           <button class="recomendar" type="button">Marcar como recomendado</button>
         </div>
       </div>
       <div class="plano" data-plano="3">
-        <header><div><div class="faixa">Pacote 3</div><h3>Avançado</h3></div><span class="tag">Recomendado</span></header>
+        <header><div><div class="faixa">Plano 3</div><h3>Premium</h3></div><span class="tag">Recomendado</span></header>
         <div class="corpo">
           <div class="campo campo-bloco">
             <div class="campo-rotulo linha-rot">Investimento</div>
             <div class="campo-texto valor" data-k="v3" contenteditable="true" spellcheck="false"></div>
             <div class="campo-texto mensal" data-k="m3" contenteditable="true" spellcheck="false"></div>
           </div>
-          <div class="campo campo-bloco">
-            <div class="campo-rotulo linha-rot">Escopo</div><p class="campo-instrucao">Um item por linha.</p>
-            <div class="campo-texto escopo" data-k="e3" contenteditable="true" spellcheck="false"></div><ul class="escopo-lista"></ul>
-          </div>
-          <div class="campo campo-bloco"><div class="campo-texto prazo-txt" data-k="d3" contenteditable="true" spellcheck="false"></div></div>
+          <div class="fixo"><div class="fixo-rot">O que inclui</div><ul class="escopo-lista"><li>Tudo do Completo</li><li>Todos os ambientes recriados por dentro em 3D</li><li>Passeio guiado para enviar aos hóspedes</li><li>Site em português e inglês</li><li>Calendário de disponibilidade</li><li>Vídeo do passeio para Reels e Stories</li><li>2 atualizações por ano</li></ul><p class="prazo-txt">Entrega em até 30 dias úteis</p></div>
           <button class="recomendar" type="button">Marcar como recomendado</button>
         </div>
       </div>
@@ -327,7 +316,7 @@ body.cliente .modo{display:none!important}
     <h2 class="o1" data-item>Do sim ao site no ar.</h2>
     <div class="duas o2" data-item>
       <ol class="passos">
-        <li><span><b>Aprovação.</b> Você escolhe o pacote e paga a entrada de 50%.</span></li>
+        <li><span><b>Aprovação.</b> Você escolhe o plano e paga a entrada de 50%.</span></li>
         <li><span><b>Material.</b> Você envia as fotos em alta (de preferência 30 ou mais, cobrindo todos os ambientes), a planta ou um croqui e o link do anúncio.</span></li>
         <li><span><b>Produção.</b> Montamos a maquete, as vistas e os ambientes em 3D.</span></li>
         <li><span><b>Revisão.</b> Você recebe o link de prévia e pede até 2 rodadas de ajustes.</span></li>
@@ -350,7 +339,7 @@ body.cliente .modo{display:none!important}
   <div class="wrap">
     <div class="abre" data-item><span class="traco"></span><span class="eyebrow">07 · Próximo passo</span></div>
     <h2 class="o1" data-item>Vamos colocar seu imóvel em 3D?</h2>
-    <p class="lede o2" data-item><strong>Responda com o pacote escolhido</strong> e enviamos o link de pagamento da entrada e a lista de fotos que precisamos.</p>
+    <p class="lede o2" data-item><strong>Responda com o plano escolhido</strong> e enviamos o link de pagamento da entrada e a lista de fotos que precisamos.</p>
     <div class="campo campo-bloco o3" data-item data-opcional style="margin-top:clamp(22px,4vh,36px)">
       <div class="campo-rotulo campo-status">Opcional · condição ou próximo passo combinado</div>
       <p class="campo-instrucao">Ex.: condição especial de lançamento, data combinada para começar, desconto por volume. Vazio, não aparece para o cliente.</p>
@@ -386,12 +375,9 @@ body.cliente .modo{display:none!important}
 (function () {
   const PADRAO = {
     imovel: '', cliente: '', contexto: '', local: '', data: new Date().toLocaleDateString('pt-BR'),
-    v1: 'R$ 1.200', m1: '+ R$ 49/mês', d1: 'Entrega em até 7 dias úteis',
-    e1: 'Vistas fotográficas de até 30 fotos\nMapa 3D simplificado do terreno, com as áreas marcadas\nBotão de WhatsApp, capacidade e comodidades\nEndereço gratuito (ex.: seuimovel.pages.dev)',
-    v2: 'R$ 3.500', m2: '+ R$ 89/mês', d2: 'Entrega em até 15 dias úteis',
-    e2: 'Tudo do Simples, sem limite de fotos\nMaquete 3D fiel de todas as construções\n1 ambiente principal recriado em 3D com luz realista\nPreços por temporada e formulário para eventos\nDomínio próprio .com.br configurado\nRelatório mensal de visitas e cliques no WhatsApp',
-    v3: 'R$ 6.900', m3: '+ R$ 149/mês', d3: 'Entrega em até 30 dias úteis',
-    e3: 'Tudo do Intermediário\nTodos os ambientes internos recriados em 3D\nPasseio guiado automático para enviar a hóspedes\nSite em português e inglês\nCalendário de disponibilidade integrado\nVídeo do passeio 3D para Reels e Stories\n2 atualizações por ano',
+    v1: 'R$ 1.200', m1: '+ R$ 49/mês',
+    v2: 'R$ 3.500', m2: '+ R$ 89/mês',
+    v3: 'R$ 6.900', m3: '+ R$ 149/mês',
     validade: '15', passo: '', vendedor: 'Guilherme', fone: '', email: '', rec: ''
   };
   const qs = new URLSearchParams(location.search);
@@ -445,12 +431,7 @@ body.cliente .modo{display:none!important}
 
   /* preenchimento */
   const valor = k => (k in dados ? dados[k] : PADRAO[k]) ?? '';
-  function listas() {
-    document.querySelectorAll('.escopo').forEach(el => {
-      const ul = el.nextElementSibling; ul.innerHTML = '';
-      valor(el.dataset.k).split('\n').map(s => s.trim()).filter(Boolean).forEach(t => { const li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
-    });
-  }
+  function listas() {}
   function aplica() {
     campos().forEach(el => { if (document.activeElement !== el) el.innerText = valor(el.dataset.k); });
     document.querySelectorAll('.plano').forEach(p => p.classList.toggle('rec', p.dataset.plano === valor('rec')));
@@ -459,7 +440,7 @@ body.cliente .modo{display:none!important}
     const fone = valor('fone').replace(/\D/g, ''), z = document.getElementById('fecharZap');
     if (fone.length >= 10) {
       const n = fone.startsWith('55') ? fone : '55' + fone;
-      const txt = `Olá, ${valor('vendedor') || ''}! Vi a proposta do site 3D${valor('imovel') ? ' para ' + valor('imovel') : ''} e quero conversar sobre o pacote `;
+      const txt = `Olá, ${valor('vendedor') || ''}! Vi a proposta do site 3D${valor('imovel') ? ' para ' + valor('imovel') : ''} e quero conversar sobre o plano `;
       z.href = `https://wa.me/${n}?text=${encodeURIComponent(txt)}`; z.hidden = false;
     } else z.hidden = true;
   }
