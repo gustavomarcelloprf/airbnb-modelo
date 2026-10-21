@@ -85,11 +85,13 @@
   .marca .nota { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 13px; color: var(--tinta-2); }
   .marca .nota strong { color: var(--tinta); font: 700 15px/1 var(--display); }
   .marca .nota a { margin-left: auto; color: var(--tinta-2); text-decoration: underline; text-underline-offset: 2px; }
+.marca .credito { display: flex; align-items: center; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid color-mix(in srgb, var(--tinta) 10%, transparent); font: 500 11px/1 var(--corpo); letter-spacing: 0.02em; color: var(--tinta-2); }
+.marca .credito svg { width: 11px; height: 11px; flex: none; }
 
   /* ---- lista de lugares ---- */
   .lugares {
-    position: fixed; left: 16px; top: calc(276px + env(safe-area-inset-top, 0px)); z-index: 4;
-    width: min(320px, calc(100vw - 32px)); max-height: calc(100% - 384px); overflow: auto; padding: 6px;
+    position: fixed; left: 16px; top: calc(292px + env(safe-area-inset-top, 0px)); z-index: 4;
+    width: min(320px, calc(100vw - 32px)); max-height: calc(100% - 400px); overflow: auto; padding: 6px;
   }
   .lugares h2 { font: 500 11px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta-2); margin: 8px 10px 6px; }
   .lugares ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
@@ -282,6 +284,8 @@
     .marca .reservar { grid-column: 2; grid-row: 1 / span 2; margin: 0; padding: 9px 14px; font-size: 13px; white-space: nowrap; }
     .marca.aberta .sub, .marca.aberta .fatos { display: flex; grid-column: 1 / -1; }
     .marca.aberta .sub { display: block; }
+.marca .credito { display: none; }
+.marca.aberta .credito { display: flex; grid-column: 1 / -1; }
     /* mapa e estilo só quando pedidos */
     .mapa, .estilo { display: none; }
     body.mapa-aberto .mapa { display: block; top: calc(124px + env(safe-area-inset-top, 0px)); }
@@ -319,6 +323,7 @@
   <div class="fatos" id="fatos"></div>
   <div class="nota">★ <strong id="nota">5,0</strong> <span id="avaliacoes">27 avaliações</span> <a id="airbnb" href="#" target="_blank" rel="noopener">anúncio</a></div>
   <a class="reservar" id="reservar" href="#" target="_blank" rel="noopener">Reservar</a>
+  <div class="credito"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 22.5V5.2h13.6v8.4h-8.5" fill="none" stroke="currentColor" stroke-width="3.4"/></svg>feito com Planor</div>
 </section>
 
 <div class="atalhos" role="group" aria-label="Atalhos de câmera">

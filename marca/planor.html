@@ -1,0 +1,446 @@
+<title>Planor · Marca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --mata:#1F4D3A;      /* Mata */
+  --sombra:#12291F;    /* Sombra */
+  --folha:#D9E4CF;     /* Folha */
+  --papel:#F5F1E8;     /* Papel */
+  --grafite:#17181C;   /* Grafite */
+  --telha:#B4572F;     /* Telha */
+  --sol:#E8A33D;       /* Sol */
+  --linha:rgba(23,24,28,.12);
+  --sans:"Geist", "Helvetica Neue", Arial, sans-serif;
+  --mono:"Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--papel);color:var(--grafite);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{font-weight:400;letter-spacing:-.035em;line-height:1.02;margin:0;text-wrap:balance}
+h2{font-size:clamp(34px,5vw,60px)}
+h3{font-size:22px;letter-spacing:-.02em;line-height:1.15}
+p{margin:0;max-width:62ch}
+.rot{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
+section{padding-block:clamp(56px,8vw,104px)}
+section+section{border-top:1px solid var(--linha)}
+.cab{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:24px 48px;align-items:end;margin-bottom:48px}
+.cab p{font-size:18px;color:rgba(23,24,28,.78)}
+@media (max-width:820px){.cab{grid-template-columns:1fr}}
+
+/* símbolo */
+.marca{display:inline-flex;align-items:center;gap:.28em;font-weight:500;letter-spacing:-.045em;line-height:1}
+.marca svg{width:.86em;height:.86em;flex:none}
+.simb{fill:none;stroke:currentColor;stroke-width:3.4;stroke-linejoin:miter;stroke-linecap:butt}
+
+/* capa */
+.capa{background:var(--mata);color:#fff;border:0;padding-block:0}
+.capa .wrap{min-height:min(640px,86vh);display:grid;grid-template-rows:auto 1fr auto;padding-block:28px 32px;position:relative;overflow:hidden}
+.capa nav{display:flex;justify-content:space-between;align-items:center;gap:16px;position:relative;z-index:1}
+.capa nav .marca{font-size:26px}
+.capa .titulo{align-self:center;position:relative;z-index:1}
+.capa .titulo .marca{font-size:clamp(72px,12vw,160px)}
+.capa .titulo p{font-size:clamp(20px,2.6vw,30px);letter-spacing:-.02em;line-height:1.2;margin-top:20px;max-width:22ch}
+.capa .pe{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;position:relative;z-index:1}
+.capa .rot{opacity:.8}
+.grade{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.09) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(100deg,transparent 30%,#000 75%)}
+.planta-capa{position:absolute;right:-6%;top:54%;width:min(470px,44%);transform:translateY(-50%);opacity:.95}
+@media (max-width:700px){.planta-capa{opacity:.35;width:90%;right:-30%}}
+
+/* ideia */
+.ideia{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.ideia div{border-top:2px solid var(--grafite);padding-top:16px;display:grid;gap:8px;align-content:start}
+.ideia b{font-weight:500;font-size:20px;letter-spacing:-.02em}
+@media (max-width:820px){.ideia{grid-template-columns:1fr}}
+
+/* construção */
+.const{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px}
+.quadro{background:#fff;border-radius:20px;padding:28px;position:relative}
+.quadro.mata{background:var(--mata);color:#fff}
+.quadro.sombra{background:var(--sombra);color:#fff}
+.quadro.folha{background:var(--folha);color:var(--sombra)}
+.quadro>.rot{position:absolute;left:24px;top:20px}
+.constr svg{width:100%;height:auto;display:block}
+.variacoes{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.variacoes .quadro{display:grid;place-items:center;min-height:180px;padding-top:48px}
+.variacoes .marca{font-size:40px}
+.icone{width:96px;height:96px;border-radius:24px;background:var(--mata);display:grid;place-items:center;color:#fff;box-shadow:0 10px 30px rgba(31,77,58,.35)}
+.icone svg{width:56px;height:56px}
+.tamanhos{display:flex;align-items:flex-end;gap:28px;flex-wrap:wrap;color:var(--mata)}
+.tamanhos .marca span{color:var(--grafite)}
+@media (max-width:820px){.const{grid-template-columns:1fr}}
+
+/* cores */
+.cores{display:grid;grid-template-columns:2.2fr 1.4fr 1fr 1fr 1fr 1fr 1fr;gap:10px}
+.cor{border-radius:16px;min-height:260px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;font-size:14px}
+.cor b{font-weight:500;font-size:17px;letter-spacing:-.01em}
+.cor code{font-family:var(--mono);font-size:12px;opacity:.85}
+.cor small{font-family:var(--mono);font-size:11px;opacity:.7;display:block;margin-top:4px}
+@media (max-width:900px){.cores{grid-template-columns:repeat(2,minmax(0,1fr))}.cor{min-height:140px}.cor:first-child{grid-column:1/-1}}
+.proporcao{display:flex;height:14px;border-radius:99px;overflow:hidden;margin-top:18px}
+.proporcao i{display:block}
+
+/* tipo */
+.tipo{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px}
+.amostra{font-size:clamp(64px,10vw,132px);letter-spacing:-.05em;line-height:.9}
+.escala{display:grid;gap:14px}
+.escala div{display:grid;grid-template-columns:76px 1fr;align-items:baseline;gap:12px;border-bottom:1px solid var(--linha);padding-bottom:12px}
+.escala .rot{font-size:11px}
+@media (max-width:820px){.tipo{grid-template-columns:1fr}}
+
+/* elementos */
+.elem{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.elem .quadro{min-height:260px;display:grid;align-content:end;gap:10px;padding-top:56px}
+.cota{font-family:var(--mono);font-size:12px;display:flex;align-items:center;gap:8px;color:var(--mata)}
+.cota::before,.cota::after{content:"";flex:1;height:1px;background:currentColor}
+.cota-wrap{border-inline:1px solid var(--mata);padding-inline:2px}
+.pinos{position:relative;height:140px;border-radius:12px;background:linear-gradient(#e9e4d6,#ddd6c3);overflow:hidden}
+.pinos::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(18,41,31,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(18,41,31,.08) 1px,transparent 1px);background-size:20px 20px}
+.pino{position:absolute;display:flex;align-items:center;gap:6px;background:#fff;border-radius:99px;padding:4px 10px 4px 4px;font-size:12px;font-weight:500;box-shadow:0 4px 14px rgba(18,41,31,.18)}
+.pino i{width:20px;height:20px;border-radius:50%;background:var(--mata);color:#fff;font:500 11px/20px var(--mono);text-align:center;font-style:normal}
+.moldura{position:relative;aspect-ratio:4/3;max-width:100%;border-radius:12px;background:linear-gradient(160deg,#7aa36b,#2f5d3a 55%,#1e3b27);overflow:hidden}
+.moldura::after{content:"";position:absolute;left:14px;bottom:14px;width:44%;height:52%;border-left:3px solid #fff;border-bottom:3px solid #fff}
+.moldura span{position:absolute;right:14px;top:12px;color:#fff;font:500 11px var(--mono);letter-spacing:.05em}
+@media (max-width:900px){.elem{grid-template-columns:1fr}}
+
+/* voz */
+.voz{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.voz ul{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:12px}
+.voz li{background:#fff;border-radius:14px;padding:14px 16px;font-size:17px;letter-spacing:-.01em}
+.voz .nao li{background:transparent;border:1px dashed rgba(23,24,28,.3);color:rgba(23,24,28,.6);text-decoration:line-through;text-decoration-color:rgba(23,24,28,.35)}
+.principios{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-bottom:28px}
+.principios div{display:grid;gap:6px}
+.principios b{font-weight:500;font-size:20px;letter-spacing:-.02em}
+@media (max-width:820px){.voz,.principios{grid-template-columns:1fr}}
+
+/* aplicações */
+.apps{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:20px}
+.app{border-radius:20px;overflow:hidden;position:relative;min-height:340px;padding:24px;display:flex;flex-direction:column}
+.app>.rot{margin-bottom:16px}
+.a-wide{grid-column:span 4}.a-3{grid-column:span 3}.a-2{grid-column:span 2}
+@media (max-width:980px){.apps{grid-template-columns:1fr}.a-wide,.a-3,.a-2{grid-column:auto}}
+
+.slide{flex:1;background:var(--mata);color:#fff;border-radius:12px;aspect-ratio:16/9;max-width:100%;padding:clamp(18px,3vw,36px);display:grid;grid-template-rows:auto 1fr auto;position:relative;overflow:hidden}
+.slide .marca{font-size:18px}
+.slide h3{font-size:clamp(26px,3.6vw,46px);letter-spacing:-.04em;line-height:1;align-self:end;max-width:14ch;position:relative;z-index:1}
+.slide .rodape{display:flex;justify-content:space-between;font:12px var(--mono);opacity:.8;margin-top:16px;position:relative;z-index:1}
+.slide svg.pl{position:absolute;right:-8%;top:-18%;width:46%;opacity:.9}
+
+.post{aspect-ratio:4/5;max-width:100%;border-radius:12px;background:var(--folha);color:var(--sombra);padding:22px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.post h3{font-size:clamp(24px,2.6vw,32px);letter-spacing:-.035em;line-height:1.02}
+.post .marca{font-size:17px;color:var(--mata)}
+.post .selo{position:absolute;right:18px;top:18px;width:84px;height:84px;border-radius:50%;background:var(--sol);display:grid;place-items:center;text-align:center;font:500 11px/1.2 var(--mono);color:var(--sombra);transform:rotate(-10deg)}
+
+.zap{flex:1;background:#E9E3D6;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.zap-topo{display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid rgba(0,0,0,.08)}
+.av{width:40px;height:40px;border-radius:50%;background:var(--mata);display:grid;place-items:center;color:#fff;flex:none}
+.av svg{width:22px;height:22px}
+.zap-topo b{font-weight:500;font-size:15px;display:block}
+.zap-topo small{font-size:12px;opacity:.6}
+.bolha{background:#fff;border-radius:4px 14px 14px 14px;padding:10px 12px;font-size:14px;line-height:1.4;max-width:92%}
+.bolha .link{margin-top:8px;border-radius:8px;overflow:hidden;background:var(--papel)}
+.bolha .link div{height:70px;background:var(--mata);position:relative}
+.bolha .link div::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);background-size:14px 14px}
+.bolha .link p{padding:6px 8px;font-size:12px}
+.bolha .link p b{font-weight:500;display:block}
+
+.cartao{aspect-ratio:85/55;max-width:100%;border-radius:10px;padding:18px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 18px 40px rgba(18,41,31,.25)}
+.cartoes{flex:1;display:grid;gap:16px;align-content:center}
+.cartao.f{background:var(--mata);color:#fff;transform:rotate(-3deg)}
+.cartao.f .marca{font-size:30px}
+.cartao.v{background:#fff;color:var(--grafite);transform:rotate(2deg);font-size:13px}
+.cartao.v b{font-weight:500;font-size:16px;display:block;letter-spacing:-.01em}
+.cartao.v code{font-family:var(--mono);font-size:11px;opacity:.75;display:block;line-height:1.6}
+
+.sitebar{flex:1;border-radius:12px;background:linear-gradient(180deg,#a9c3e6 0%,#d8e2d0 48%,#6f8f5b 49%,#486b3e 100%);position:relative;min-height:260px;overflow:hidden}
+.sitebar .hdr{position:absolute;left:12px;right:12px;top:12px;background:rgba(245,241,232,.92);border-radius:14px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sitebar .hdr b{font-weight:500;letter-spacing:-.02em;font-size:15px}
+.sitebar .hdr small{display:block;font-size:11px;opacity:.65}
+.btn{background:var(--mata);color:#fff;border-radius:99px;padding:7px 14px;font-size:13px;font-weight:500;white-space:nowrap}
+.sitebar .creditos{position:absolute;right:12px;bottom:12px;background:rgba(18,41,31,.82);color:#fff;border-radius:99px;padding:5px 10px 5px 8px;font-size:11px;display:flex;align-items:center;gap:6px}
+.sitebar .creditos svg{width:12px;height:12px}
+.sitebar .casa{position:absolute;left:28%;top:44%;width:44%;height:22%;background:#f1ece2;border-radius:3px;box-shadow:inset 0 -10px 0 rgba(0,0,0,.08);transform:skewX(-14deg)}
+.sitebar .casa::before{content:"";position:absolute;left:-4%;right:-4%;top:-46%;height:50%;background:#7b4a33;clip-path:polygon(8% 100%,50% 0,92% 100%)}
+.sitebar .pino{bottom:auto}
+
+footer{background:var(--sombra);color:#fff;padding-block:40px}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+footer .marca{font-size:28px}
+:focus-visible{outline:2px solid var(--sol);outline-offset:3px}
+</style>
+
+<!-- símbolo reutilizável -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="p" viewBox="0 0 24 24"><path class="simb" d="M5.2 22.5V5.2h13.6v8.4h-8.5"/></symbol>
+  </defs>
+</svg>
+
+<section class="capa">
+  <div class="wrap">
+    <div class="grade"></div>
+    <svg class="planta-capa" viewBox="0 0 400 400" fill="none" stroke="#fff" aria-hidden="true">
+      <g stroke-width="6" stroke-linejoin="miter">
+        <path d="M40 360V40h320v200H170"/>
+      </g>
+      <g stroke-width="1.4" opacity=".75">
+        <path d="M170 240V160"/><path d="M170 160A80 80 0 0 0 90 240" stroke-dasharray="3 5"/>
+        <path d="M200 40v120h160"/><path d="M40 300h60"/>
+        <rect x="236" y="76" width="96" height="60" rx="4"/>
+        <path d="M60 60h110v80H60z"/>
+      </g>
+      <g font-family="Geist Mono, monospace" font-size="11" fill="#fff" stroke="none" opacity=".8">
+        <text x="250" y="110">Piscina</text><text x="72" y="104">Suíte 1</text><text x="214" y="200">Salão</text>
+        <text x="300" y="30">12,40 m</text>
+      </g>
+      <path d="M200 24h160" stroke-width="1" opacity=".7"/><path d="M200 18v12M360 18v12" stroke-width="1" opacity=".7"/>
+    </svg>
+    <nav>
+      <span class="marca"><svg><use href="#p"/></svg>Planor</span>
+      <span class="rot">Manual de marca · v1 · out 2026</span>
+    </nav>
+    <div class="titulo">
+      <span class="marca"><svg><use href="#p"/></svg>Planor</span>
+      <p>Seu hóspede conhece a casa antes de chegar.</p>
+    </div>
+    <div class="pe">
+      <span class="rot">Sites 3D para casas de temporada</span>
+      <span class="rot">Escala 1:1 · todos os ângulos</span>
+    </div>
+  </div>
+</section>
+
+<main>
+<section>
+  <div class="wrap">
+    <div class="cab">
+      <div><p class="rot">01 · A ideia</p><h2>Do plano ao passeio.</h2></div>
+      <p>Planor junta <b>plano</b>, a planta baixa de onde todo imóvel nasce, com <b>planar</b>, o voo de câmera que mostra a propriedade inteira. A marca fala com quem aluga casas boas e quer que o hóspede sinta o lugar antes de reservar.</p>
+    </div>
+    <div class="ideia">
+      <div><b>Precisa como uma planta</b><p>Medidas, caminhos e cômodos no lugar certo. Nada de render genérico.</p></div>
+      <div><b>Leve como um sobrevoo</b><p>Interface quieta. Quem aparece é a casa, nunca a ferramenta.</p></div>
+      <div><b>Próxima como um anfitrião</b><p>Falamos como quem recebe bem: claro, caloroso, sem jargão.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cab">
+      <div><p class="rot">02 · Símbolo</p><h2>Um P desenhado como planta.</h2></div>
+      <p>O símbolo é a letra P traçada com paredes: um cômodo com a porta aberta para quem chega. A abertura no canto é o convite para entrar.</p>
+    </div>
+    <div class="const">
+      <div class="quadro constr">
+        <span class="rot">Construção · grade 24 × 24</span>
+        <svg viewBox="-2 -2 28 28" aria-label="Construção do símbolo sobre grade">
+          <g stroke="rgba(31,77,58,.18)" stroke-width=".06">
+            <path d="M0 0h24M0 2h24M0 4h24M0 6h24M0 8h24M0 10h24M0 12h24M0 14h24M0 16h24M0 18h24M0 20h24M0 22h24M0 24h24"/>
+            <path d="M0 0v24M2 0v24M4 0v24M6 0v24M8 0v24M10 0v24M12 0v24M14 0v24M16 0v24M18 0v24M20 0v24M22 0v24M24 0v24"/>
+          </g>
+          <path d="M5.2 22.5V5.2h13.6v8.4h-8.5" fill="none" stroke="#1F4D3A" stroke-width="3.4"/>
+          <g fill="none" stroke="#17181C" stroke-width=".09">
+            <path d="M10.3 13.6v-4.2"/><path d="M10.3 9.4A4.2 4.2 0 0 0 6.1 13.6" stroke-dasharray=".3 .3"/>
+            <path d="M6.9 15.6h3.4M6.9 15.2v.8M10.3 15.2v.8"/>
+          </g>
+          <text x="7.1" y="16.9" font-family="Geist Mono, monospace" font-size=".7" fill="#17181C">porta</text>
+          <text x="20.2" y="9.6" font-family="Geist Mono, monospace" font-size=".7" fill="#1F4D3A">parede 3,4</text>
+        </svg>
+      </div>
+      <div class="variacoes">
+        <div class="quadro mata"><span class="rot">Principal</span><span class="marca"><svg><use href="#p"/></svg>Planor</span></div>
+        <div class="quadro"><span class="rot">Sobre claro</span><span class="marca" style="color:var(--mata)"><svg><use href="#p"/></svg><span style="color:var(--grafite)">Planor</span></span></div>
+        <div class="quadro sombra"><span class="rot">Sobre escuro</span><span class="marca"><svg style="color:var(--folha)"><use href="#p"/></svg>Planor</span></div>
+        <div class="quadro folha"><span class="rot">Ícone de app e perfil</span><div class="icone"><svg><use href="#p"/></svg></div></div>
+      </div>
+    </div>
+    <div class="quadro" style="margin-top:20px">
+      <span class="rot">Tamanhos mínimos</span>
+      <div class="tamanhos" style="padding-top:36px">
+        <span class="marca" style="font-size:56px"><svg><use href="#p"/></svg><span>Planor</span></span>
+        <span class="marca" style="font-size:32px"><svg><use href="#p"/></svg><span>Planor</span></span>
+        <span class="marca" style="font-size:18px"><svg><use href="#p"/></svg><span>Planor</span></span>
+        <span class="rot" style="color:var(--grafite)">Mínimo 16 px de altura · área de respiro = largura da parede × 3</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cab">
+      <div><p class="rot">03 · Cores</p><h2>Verde de mata, chão de terra.</h2></div>
+      <p>O verde Mata vem dos jardins, gramados e matas ao redor das casas que mostramos, e lidera tudo. Papel e Folha dão respiro. Telha e Sol aparecem pouco, como o telhado e a luz da tarde.</p>
+    </div>
+    <div class="cores">
+      <div class="cor" style="background:var(--mata);color:#fff"><b>Mata</b><div><code>#1F4D3A</code><small>RGB 31 77 58 · principal</small></div></div>
+      <div class="cor" style="background:var(--sombra);color:#fff"><b>Sombra</b><div><code>#12291F</code><small>textos e fundos escuros</small></div></div>
+      <div class="cor" style="background:var(--folha);color:var(--sombra)"><b>Folha</b><div><code>#D9E4CF</code><small>fundos suaves</small></div></div>
+      <div class="cor" style="background:#fff;color:var(--grafite);box-shadow:inset 0 0 0 1px var(--linha)"><b>Papel</b><div><code>#F5F1E8</code><small>base</small></div></div>
+      <div class="cor" style="background:var(--grafite);color:#fff"><b>Grafite</b><div><code>#17181C</code><small>texto</small></div></div>
+      <div class="cor" style="background:var(--telha);color:#fff"><b>Telha</b><div><code>#B4572F</code><small>apoio</small></div></div>
+      <div class="cor" style="background:var(--sol);color:var(--sombra)"><b>Sol</b><div><code>#E8A33D</code><small>destaque pontual</small></div></div>
+    </div>
+    <div class="proporcao" aria-label="Proporção de uso das cores">
+      <i style="flex:40;background:var(--mata)"></i><i style="flex:25;background:var(--papel);box-shadow:inset 0 0 0 1px var(--linha)"></i><i style="flex:14;background:var(--folha)"></i><i style="flex:10;background:var(--sombra)"></i><i style="flex:6;background:var(--telha)"></i><i style="flex:5;background:var(--sol)"></i>
+    </div>
+    <p class="rot" style="margin-top:10px">Proporção de uso · Mata 40 · Papel 25 · Folha 14 · Sombra 10 · Telha 6 · Sol 5</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cab">
+      <div><p class="rot">04 · Tipografia</p><h2>Geist, e só.</h2></div>
+      <p>Uma família neutra e gratuita, a mesma em site, proposta e redes. Títulos grandes em peso regular, bem justos. Geist Mono entra nos detalhes técnicos: medidas, escalas, rótulos de planta.</p>
+    </div>
+    <div class="tipo">
+      <div class="quadro" style="display:grid;align-content:space-between;gap:28px;padding-top:56px">
+        <span class="rot">Geist Regular · −5% de espaçamento</span>
+        <div class="amostra">Aa Bb<br>Planta 3D</div>
+        <p style="font-family:var(--mono);font-size:13px;color:var(--mata)">Geist Mono → Salão 14,2 × 9,6 m · Escala 1:100 · Pino 03</p>
+      </div>
+      <div class="escala">
+        <div><span class="rot">Display</span><span style="font-size:48px;letter-spacing:-.045em;line-height:1">Visite antes</span></div>
+        <div><span class="rot">Título</span><span style="font-size:30px;letter-spacing:-.035em;line-height:1.05">A casa inteira, de cima</span></div>
+        <div><span class="rot">Subtítulo</span><span style="font-size:20px;letter-spacing:-.02em;font-weight:500">Três pacotes, um objetivo</span></div>
+        <div><span class="rot">Texto</span><span style="font-size:16px">Seu hóspede passeia pela casa no celular, sem baixar nada.</span></div>
+        <div><span class="rot">Técnico</span><span style="font-family:var(--mono);font-size:13px">CASA 1 · 4 SUÍTES · 280 M²</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cab">
+      <div><p class="rot">05 · Elementos</p><h2>Linhas de planta, pinos e o canto aberto.</h2></div>
+      <p>Três recursos gráficos, todos tirados do próprio produto. Use um por peça. Ilustrações ficam para uma segunda fase da marca.</p>
+    </div>
+    <div class="elem">
+      <div class="quadro">
+        <span class="rot">Cotas e grade</span>
+        <div style="display:grid;gap:22px;padding-block:20px">
+          <div class="cota-wrap"><div class="cota">12,40 m</div></div>
+          <div class="cota-wrap" style="width:62%"><div class="cota">7,80 m</div></div>
+        </div>
+        <p style="font-size:14px;opacity:.75">Medidas reais do imóvel como ornamento. Sempre em Geist Mono, sempre verdadeiras.</p>
+      </div>
+      <div class="quadro">
+        <span class="rot">Pinos</span>
+        <div class="pinos">
+          <span class="pino" style="left:12%;top:22%"><i>01</i>Casa 1</span>
+          <span class="pino" style="left:50%;top:46%"><i>02</i>Piscina</span>
+          <span class="pino" style="left:20%;top:70%"><i>03</i>Lago</span>
+        </div>
+        <p style="font-size:14px;opacity:.75">Os mesmos pinos do site 3D. Numerados, brancos, com a bolinha verde.</p>
+      </div>
+      <div class="quadro">
+        <span class="rot">Canto aberto</span>
+        <div class="moldura"><span>CHÁCARA · BOFETE</span></div>
+        <p style="font-size:14px;opacity:.75">O canto do símbolo enquadra fotos. Fino, branco, só em um canto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cab">
+      <div><p class="rot">06 · Voz</p><h2>Fala como anfitrião, não como agência.</h2></div>
+      <p>Quem lê é dono de casa boa, ocupado, desconfiado de vendedor. Vamos direto ao que muda na reserva dele.</p>
+    </div>
+    <div class="principios">
+      <div><b>Mostra, não promete</b><p>Mande o link antes do adjetivo.</p></div>
+      <div><b>Fala do hóspede</b><p>O resultado é a reserva, não o 3D.</p></div>
+      <div><b>Curto e humano</b><p>Uma ideia por frase, sem termos técnicos.</p></div>
+    </div>
+    <div class="voz">
+      <div><p class="rot">Assim</p><ul>
+        <li>Seu hóspede passeia pela casa antes de reservar.</li>
+        <li>Fiz um teste com a sua casa. Dá uma olhada no celular?</li>
+        <li>Piscina, lago e as duas casas, tudo em um link.</li>
+      </ul></div>
+      <div class="nao"><p class="rot">Não assim</p><ul>
+        <li>Solução imersiva de gêmeo digital com tecnologia de ponta.</li>
+        <li>Revolucione a experiência do seu hóspede!!!</li>
+        <li>Renderização fotorrealista via gaussian splatting.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cab">
+      <div><p class="rot">07 · Aplicações</p><h2>A marca no dia a dia.</h2></div>
+      <p>As peças que já existem, redesenhadas: proposta, WhatsApp, redes, cartão e o selo discreto dentro do site de cada cliente.</p>
+    </div>
+    <div class="apps">
+      <div class="app a-wide" style="background:#fff">
+        <span class="rot">Proposta comercial · capa</span>
+        <div class="slide">
+          <span class="marca"><svg><use href="#p"/></svg>Planor</span>
+          <svg class="pl" viewBox="0 0 400 400" fill="none" stroke="#fff" aria-hidden="true"><path d="M40 360V40h320v200H170" stroke-width="5"/><path d="M200 40v120h160M60 60h110v80H60z" stroke-width="1.2" opacity=".6"/></svg>
+          <h3>Chácara Maravilhosa em 3D</h3>
+          <div class="rodape"><span>Preparada para Marina</span><span>Out 2026</span></div>
+        </div>
+      </div>
+      <div class="app a-2" style="background:var(--sombra);color:#fff">
+        <span class="rot">Ícone</span>
+        <div style="flex:1;display:grid;place-items:center;gap:12px">
+          <div style="display:grid;justify-items:center;gap:10px">
+            <div class="icone" style="width:120px;height:120px;border-radius:28px"><svg style="width:68px;height:68px"><use href="#p"/></svg></div>
+            <span style="font-size:13px;opacity:.85">Planor</span>
+          </div>
+        </div>
+      </div>
+      <div class="app a-2" style="background:var(--papel);box-shadow:inset 0 0 0 1px var(--linha)">
+        <span class="rot">Instagram</span>
+        <div class="post">
+          <span class="selo">VEJA<br>NO<br>CELULAR</span>
+          <h3>Seu hóspede passeia pela casa antes de reservar.</h3>
+          <span class="marca"><svg><use href="#p"/></svg>Planor</span>
+        </div>
+      </div>
+      <div class="app a-2" style="background:#fff">
+        <span class="rot">WhatsApp</span>
+        <div class="zap">
+          <div class="zap-topo"><span class="av"><svg><use href="#p"/></svg></span><div><b>Guilherme · Planor</b><small>conta comercial</small></div></div>
+          <div class="bolha">Oi, Marina! Aqui é o Guilherme, da Planor. Vi a chácara de vocês e montei um teste em 3D:
+            <div class="link"><div></div><p><b>Chácara Maravilhosa em 3D</b>planor · passeio interativo</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="app a-2" style="background:var(--folha)">
+        <span class="rot" style="color:var(--sombra)">Cartão</span>
+        <div class="cartoes">
+          <div class="cartao f"><span class="marca"><svg><use href="#p"/></svg>Planor</span><span style="font:11px var(--mono);opacity:.8">Sites 3D para casas de temporada</span></div>
+          <div class="cartao v"><div><b>Guilherme</b>Atendimento</div><code>WhatsApp (11) 9____-____<br>contato@planor.com.br</code></div>
+        </div>
+      </div>
+      <div class="app a-wide" style="background:#fff">
+        <span class="rot">Selo no site do cliente</span>
+        <div class="sitebar">
+          <div class="hdr"><div><b>Chácara Maravilhosa</b><small>Bofete · SP · ★ 4,9</small></div><span class="btn">Reservar</span></div>
+          <div class="casa"></div>
+          <span class="pino" style="left:30%;top:34%"><i>01</i>Casa 1</span>
+          <span class="pino" style="left:62%;top:62%"><i>02</i>Piscina</span>
+          <span class="creditos"><svg viewBox="0 0 24 24"><path d="M5.2 22.5V5.2h13.6v8.4h-8.5" fill="none" stroke="#fff" stroke-width="3.4"/></svg>feito com Planor</span>
+        </div>
+        <p style="font-size:14px;opacity:.75;margin-top:12px">No site do cliente, a casa manda. A Planor aparece só no canto, pequena, como assinatura.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="marca"><svg><use href="#p"/></svg>Planor</span>
+    <span class="rot">Manual de marca v1 · out 2026</span>
+  </div>
+</footer>

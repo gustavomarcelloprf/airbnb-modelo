@@ -1,0 +1,74 @@
+<title>Planor · Cores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root{color-scheme:light;--papel:#F5F1E8;--grafite:#17181C;--linha:rgba(23,24,28,.12);--sans:"Geist","Helvetica Neue",Arial,sans-serif;--mono:"Geist Mono",ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--papel);color:var(--grafite);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px);padding-block:48px 72px}
+h1{font-weight:400;font-size:clamp(34px,5vw,56px);letter-spacing:-.04em;line-height:1.02;margin:0 0 12px}
+.intro{font-size:18px;color:rgba(23,24,28,.75);max-width:60ch;margin:0 0 40px}
+.rot{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
+.marca{display:inline-flex;align-items:center;gap:.28em;font-weight:500;letter-spacing:-.045em;line-height:1}
+.marca svg{width:.86em;height:.86em;flex:none}
+.simb{fill:none;stroke:currentColor;stroke-width:3.4}
+.op{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;padding-block:28px;border-top:1px solid var(--linha)}
+.op header{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px 24px}
+.op h2{font-weight:500;font-size:26px;letter-spacing:-.03em;margin:0}
+.op header p{margin:4px 0 0;max-width:62ch;color:rgba(23,24,28,.75)}
+.capa{background:var(--p);color:#fff;border-radius:16px;padding:24px;min-height:300px;display:grid;grid-template-rows:auto 1fr auto;position:relative;overflow:hidden}
+.capa .grade{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px);background-size:40px 40px;mask-image:linear-gradient(100deg,transparent 35%,#000 80%)}
+.capa .pl{position:absolute;right:-4%;top:12%;width:42%;opacity:.9}
+.capa .grande{font-size:clamp(52px,8vw,96px);align-self:center;position:relative}
+.capa p{margin:0;font-size:18px;letter-spacing:-.02em;position:relative}
+.lado{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.post{background:var(--c);color:var(--e);border-radius:16px;padding:18px;display:flex;flex-direction:column;justify-content:space-between;min-height:190px}
+.post b{font-weight:400;font-size:21px;letter-spacing:-.035em;line-height:1.05}
+.post .marca{font-size:15px;color:var(--p)}
+.ic{background:#fff;border-radius:16px;display:grid;place-items:center;min-height:190px}
+.ic div{width:88px;height:88px;border-radius:22px;background:var(--p);display:grid;place-items:center;color:#fff;box-shadow:0 10px 26px color-mix(in srgb,var(--p) 40%,transparent)}
+.ic svg{width:52px;height:52px}
+.paleta{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+.paleta span{display:flex;align-items:center;gap:8px;background:#fff;border-radius:99px;padding:5px 12px 5px 5px;font:12px var(--mono)}
+.paleta i{width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.selo{font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;background:var(--grafite);color:#fff;border-radius:99px;padding:5px 10px}
+.btn{display:inline-block;background:var(--p);color:#fff;border-radius:99px;padding:8px 16px;font-size:14px;font-weight:500}
+@media (max-width:820px){.op{grid-template-columns:1fr}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="p" viewBox="0 0 24 24"><path class="simb" d="M5.2 22.5V5.2h13.6v8.4h-8.5"/></symbol></defs></svg>
+
+<div class="wrap">
+  <p class="rot">Planor · troca da cor principal</p>
+  <h1>Quatro caminhos para sair do azul.</h1>
+  <p class="intro">Mesmo símbolo, mesma fonte, mesmos elementos. Só muda a cor que lidera a marca e o tom claro que a acompanha. Todas vêm do mundo das casas que a gente mostra.</p>
+
+  <section class="op" style="--p:#1F4D3A;--c:#D9E4CF;--e:#12291F">
+    <header><div><h2>A · Mata</h2><p>Verde profundo de jardim e mata ciliar. Conversa direto com chácaras, sítios e casas de campo, e passa a sensação de alto padrão sem esforço.</p></div><span class="selo">Minha recomendação</span></header>
+    <div class="capa"><div class="grade"></div><svg class="pl" viewBox="0 0 400 400" fill="none" stroke="#fff"><path d="M40 360V40h320v200H170" stroke-width="5"/><path d="M200 40v120h160M60 60h110v80H60z" stroke-width="1.2" opacity=".6"/></svg><span class="marca" style="font-size:20px"><svg><use href="#p"/></svg>Planor</span><span class="marca grande"><svg><use href="#p"/></svg>Planor</span><p>Seu hóspede conhece a casa antes de chegar.</p></div>
+    <div class="lado"><div class="post"><b>Seu hóspede passeia pela casa antes de reservar.</b><span class="marca"><svg><use href="#p"/></svg>Planor</span></div><div class="ic"><div><svg><use href="#p"/></svg></div></div><div class="post" style="background:#fff;grid-column:1/-1;min-height:auto;flex-direction:row;align-items:center;gap:12px"><span style="font-size:14px">Botão no site do cliente</span><span class="btn">Reservar</span></div></div>
+    <div class="paleta"><span><i style="background:#1F4D3A"></i>Mata #1F4D3A</span><span><i style="background:#D9E4CF"></i>Folha #D9E4CF</span><span><i style="background:#12291F"></i>Sombra #12291F</span><span><i style="background:#F5F1E8"></i>Papel #F5F1E8</span><span><i style="background:#E8A33D"></i>Sol #E8A33D</span></div>
+  </section>
+
+  <section class="op" style="--p:#0F6B70;--c:#CDEAE8;--e:#0A2E31">
+    <header><div><h2>B · Piscina</h2><p>Azul-petróleo, a cor da água de piscina na sombra. Continua fresco e confiável como um azul, mas longe do QuintoAndar. Ótimo para praia e casas com piscina.</p></div></header>
+    <div class="capa"><div class="grade"></div><svg class="pl" viewBox="0 0 400 400" fill="none" stroke="#fff"><path d="M40 360V40h320v200H170" stroke-width="5"/><path d="M200 40v120h160M60 60h110v80H60z" stroke-width="1.2" opacity=".6"/></svg><span class="marca" style="font-size:20px"><svg><use href="#p"/></svg>Planor</span><span class="marca grande"><svg><use href="#p"/></svg>Planor</span><p>Seu hóspede conhece a casa antes de chegar.</p></div>
+    <div class="lado"><div class="post"><b>Seu hóspede passeia pela casa antes de reservar.</b><span class="marca"><svg><use href="#p"/></svg>Planor</span></div><div class="ic"><div><svg><use href="#p"/></svg></div></div><div class="post" style="background:#fff;grid-column:1/-1;min-height:auto;flex-direction:row;align-items:center;gap:12px"><span style="font-size:14px">Botão no site do cliente</span><span class="btn">Reservar</span></div></div>
+    <div class="paleta"><span><i style="background:#0F6B70"></i>Piscina #0F6B70</span><span><i style="background:#CDEAE8"></i>Água #CDEAE8</span><span><i style="background:#0A2E31"></i>Fundo #0A2E31</span><span><i style="background:#F5F1E8"></i>Papel #F5F1E8</span><span><i style="background:#F07A4A"></i>Coral #F07A4A</span></div>
+  </section>
+
+  <section class="op" style="--p:#B4472A;--c:#F3D9C9;--e:#3D170C">
+    <header><div><h2>C · Telha</h2><p>Vermelho de telha colonial. Quente, acolhedor e muito brasileiro. É a mais chamativa das quatro e se destaca no feed e no WhatsApp.</p></div></header>
+    <div class="capa"><div class="grade"></div><svg class="pl" viewBox="0 0 400 400" fill="none" stroke="#fff"><path d="M40 360V40h320v200H170" stroke-width="5"/><path d="M200 40v120h160M60 60h110v80H60z" stroke-width="1.2" opacity=".6"/></svg><span class="marca" style="font-size:20px"><svg><use href="#p"/></svg>Planor</span><span class="marca grande"><svg><use href="#p"/></svg>Planor</span><p>Seu hóspede conhece a casa antes de chegar.</p></div>
+    <div class="lado"><div class="post"><b>Seu hóspede passeia pela casa antes de reservar.</b><span class="marca"><svg><use href="#p"/></svg>Planor</span></div><div class="ic"><div><svg><use href="#p"/></svg></div></div><div class="post" style="background:#fff;grid-column:1/-1;min-height:auto;flex-direction:row;align-items:center;gap:12px"><span style="font-size:14px">Botão no site do cliente</span><span class="btn">Reservar</span></div></div>
+    <div class="paleta"><span><i style="background:#B4472A"></i>Telha #B4472A</span><span><i style="background:#F3D9C9"></i>Argila #F3D9C9</span><span><i style="background:#3D170C"></i>Madeira #3D170C</span><span><i style="background:#F5F1E8"></i>Papel #F5F1E8</span><span><i style="background:#2F5D3A"></i>Musgo #2F5D3A</span></div>
+  </section>
+
+  <section class="op" style="--p:#4A2545;--c:#E7D6E2;--e:#24101F">
+    <header><div><h2>D · Ameixa</h2><p>Roxo-vinho escuro, de hotel boutique. A mais sofisticada e a menos comum no setor imobiliário. Fala com o público de luxo, mas é menos solar.</p></div></header>
+    <div class="capa"><div class="grade"></div><svg class="pl" viewBox="0 0 400 400" fill="none" stroke="#fff"><path d="M40 360V40h320v200H170" stroke-width="5"/><path d="M200 40v120h160M60 60h110v80H60z" stroke-width="1.2" opacity=".6"/></svg><span class="marca" style="font-size:20px"><svg><use href="#p"/></svg>Planor</span><span class="marca grande"><svg><use href="#p"/></svg>Planor</span><p>Seu hóspede conhece a casa antes de chegar.</p></div>
+    <div class="lado"><div class="post"><b>Seu hóspede passeia pela casa antes de reservar.</b><span class="marca"><svg><use href="#p"/></svg>Planor</span></div><div class="ic"><div><svg><use href="#p"/></svg></div></div><div class="post" style="background:#fff;grid-column:1/-1;min-height:auto;flex-direction:row;align-items:center;gap:12px"><span style="font-size:14px">Botão no site do cliente</span><span class="btn">Reservar</span></div></div>
+    <div class="paleta"><span><i style="background:#4A2545"></i>Ameixa #4A2545</span><span><i style="background:#E7D6E2"></i>Flor #E7D6E2</span><span><i style="background:#24101F"></i>Vinho #24101F</span><span><i style="background:#F5F1E8"></i>Papel #F5F1E8</span><span><i style="background:#E8A33D"></i>Sol #E8A33D</span></div>
+  </section>
+</div>
