@@ -221,6 +221,10 @@ function mensagem(l){
   const vars = { saudacao: nomeC?`Oi, ${nomeC}! Tudo bem?`:'Oi, tudo bem?', nome:l.nome, local:local(l), onde_viu:l.onde_viu||'', eu:EU, o_imovel: l.tipo==='chacara'?'a chácara':'a casa' };
   return base.replace(/\{(\w+)\}/g,(m,k)=>vars[k]??m).replace(/ +([,.])/g,'$1').replace(/  +/g,' ');
 }
+function linkProposta(l){
+  const q = { imovel:l.nome, cliente:(l.contato_nome||'').trim(), local:local(l), vendedor:EU, para:(l.telefone||'').replace(/\D/g,'') };
+  return '../proposta/?' + new URLSearchParams(Object.entries(q).filter(([,v])=>v));
+}
 function linkZap(l, txt){ return `https://wa.me/${(l.telefone||'').replace(/\D/g,'')}?text=${encodeURIComponent(txt)}`; }
 
 function renderCota(){
@@ -274,6 +278,7 @@ function render(){
         <div class="acoes">
           <a class="btn zap" data-zap href="${l.telefone?esc(linkZap(l,l.mensagem_editada||mensagem(l))):'#'}" target="_blank" rel="noopener noreferrer"${!l.telefone||cheio&&st==='novo'?' aria-disabled="true"':''}>Abrir no WhatsApp</a>
           <button class="btn" data-copiar>Copiar mensagem</button>
+          <a class="btn" href="${esc(linkProposta(l))}" target="_blank" rel="noopener">Gerar proposta</a>
           ${st==='novo'?`<button class="btn" data-enviado>Marcar enviado</button>`:''}
           ${l.mensagem_editada?`<button class="btn" data-restaurar>Restaurar texto</button>`:''}
         </div>
